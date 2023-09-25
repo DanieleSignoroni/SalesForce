@@ -26,20 +26,20 @@
 "%> 
 <%
   ServletEnvironment se = (ServletEnvironment)Factory.createObject("com.thera.thermfw.web.ServletEnvironment"); 
-  BODataCollector YProdottiSFBODC = null; 
+  BODataCollector YEsportatoreClientiBODC = null; 
   List errors = new ArrayList(); 
   WebJSTypeList jsList = new WebJSTypeList(); 
-  WebForm YProdottiSFForm =  
-     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YProdottiSFForm", "YProdottiSF", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
-  YProdottiSFForm.setServletEnvironment(se); 
-  YProdottiSFForm.setJSTypeList(jsList); 
-  YProdottiSFForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
-  YProdottiSFForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
-  ((WebFormForBatchForm)  YProdottiSFForm).setGenerateThReportId(true); 
-  ((WebFormForBatchForm)  YProdottiSFForm).setGenerateSSDEnabled(true); 
-  YProdottiSFForm.setDeniedAttributeModeStr("hideNone"); 
-  int mode = YProdottiSFForm.getMode(); 
-  String key = YProdottiSFForm.getKey(); 
+  WebForm YEsportatoreClientiForm =  
+     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YEsportatoreClientiForm", "YEsportatoreClienti", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
+  YEsportatoreClientiForm.setServletEnvironment(se); 
+  YEsportatoreClientiForm.setJSTypeList(jsList); 
+  YEsportatoreClientiForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
+  YEsportatoreClientiForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
+  ((WebFormForBatchForm)  YEsportatoreClientiForm).setGenerateThReportId(true); 
+  ((WebFormForBatchForm)  YEsportatoreClientiForm).setGenerateSSDEnabled(true); 
+  YEsportatoreClientiForm.setDeniedAttributeModeStr("hideNone"); 
+  int mode = YEsportatoreClientiForm.getMode(); 
+  String key = YEsportatoreClientiForm.getKey(); 
   String errorMessage; 
   boolean requestIsValid = false; 
   boolean leftIsKey = false; 
@@ -50,35 +50,35 @@
      se.initialize(request, response); 
      if(se.begin()) 
      { 
-        YProdottiSFForm.outTraceInfo(getClass().getName()); 
-        String collectorName = YProdottiSFForm.findBODataCollectorName(); 
-				 YProdottiSFBODC = (BODataCollector)Factory.createObject(collectorName); 
-        if (YProdottiSFBODC instanceof WebDataCollector) 
-            ((WebDataCollector)YProdottiSFBODC).setServletEnvironment(se); 
-        YProdottiSFBODC.initialize("YProdottiSF", true, 0); 
+        YEsportatoreClientiForm.outTraceInfo(getClass().getName()); 
+        String collectorName = YEsportatoreClientiForm.findBODataCollectorName(); 
+				 YEsportatoreClientiBODC = (BODataCollector)Factory.createObject(collectorName); 
+        if (YEsportatoreClientiBODC instanceof WebDataCollector) 
+            ((WebDataCollector)YEsportatoreClientiBODC).setServletEnvironment(se); 
+        YEsportatoreClientiBODC.initialize("YEsportatoreClienti", true, 0); 
         int rcBODC; 
-        if (YProdottiSFBODC.getBo() instanceof BatchRunnable) 
-          rcBODC = YProdottiSFBODC.initSecurityServices("RUN", mode, true, false, true); 
+        if (YEsportatoreClientiBODC.getBo() instanceof BatchRunnable) 
+          rcBODC = YEsportatoreClientiBODC.initSecurityServices("RUN", mode, true, false, true); 
         else 
-          rcBODC = YProdottiSFBODC.initSecurityServices(mode, true, true, true); 
+          rcBODC = YEsportatoreClientiBODC.initSecurityServices(mode, true, true, true); 
         if (rcBODC == BODataCollector.OK) 
         { 
            requestIsValid = true; 
-           YProdottiSFForm.write(out); 
+           YEsportatoreClientiForm.write(out); 
            if(mode != WebForm.NEW) 
-              rcBODC = YProdottiSFBODC.retrieve(key); 
+              rcBODC = YEsportatoreClientiBODC.retrieve(key); 
            if(rcBODC == BODataCollector.OK) 
            { 
-              YProdottiSFForm.setBODataCollector(YProdottiSFBODC); 
-              YProdottiSFForm.writeHeadElements(out); 
+              YEsportatoreClientiForm.setBODataCollector(YEsportatoreClientiBODC); 
+              YEsportatoreClientiForm.writeHeadElements(out); 
            // fine blocco XXX  
            // a completamento blocco di codice YYY a fine body con catch e gestione errori 
 %> 
 
-	<title>Esportatore clienti - Sales Force</title>
+	<title>Esportatore prodotti - Sales Force</title>
 <% 
   WebToolBar myToolBarTB = new com.thera.thermfw.web.WebToolBar("myToolBar", "24", "24", "16", "16", "#f7fbfd","#C8D6E1"); 
-  myToolBarTB.setParent(YProdottiSFForm); 
+  myToolBarTB.setParent(YEsportatoreClientiForm); 
    request.setAttribute("toolBar", myToolBarTB); 
 %> 
 <jsp:include page="/com/thera/thermfw/batch/BatchRunnableMenu.jsp" flush="true"> 
@@ -98,16 +98,16 @@
   link_0.write(out); 
 %>
 <!--<link href="thermweb/css/thermGrid.css" rel="STYLESHEET" type="text/css">-->
-<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YProdottiSFForm.getBodyOnBeforeUnload()%>" onload="<%=YProdottiSFForm.getBodyOnLoad()%>" onunload="<%=YProdottiSFForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
-   YProdottiSFForm.writeBodyStartElements(out); 
+<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YEsportatoreClientiForm.getBodyOnBeforeUnload()%>" onload="<%=YEsportatoreClientiForm.getBodyOnLoad()%>" onunload="<%=YEsportatoreClientiForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
+   YEsportatoreClientiForm.writeBodyStartElements(out); 
 %> 
 
 	<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
 <td style="height:0" valign="top">
-<% String hdr = YProdottiSFForm.getCompleteHeader();
+<% String hdr = YEsportatoreClientiForm.getCompleteHeader();
  if (hdr != null) { 
-   request.setAttribute("dataCollector", YProdottiSFBODC); 
+   request.setAttribute("dataCollector", YEsportatoreClientiBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= hdr %>" flush="true"/> 
 <% } %> 
@@ -116,8 +116,8 @@
 
 <tr>
 <td valign="top" height="100%">
-<form action="<%=YProdottiSFForm.getServlet()%>" method="post" name="YProdottiSF" style="height:100%"><%
-  YProdottiSFForm.writeFormStartElements(out); 
+<form action="<%=YEsportatoreClientiForm.getServlet()%>" method="post" name="YEsportatoreClienti" style="height:100%"><%
+  YEsportatoreClientiForm.writeFormStartElements(out); 
 %>
 
 		<table cellpadding="2" cellspacing="2" height="100%" width="100%">
@@ -136,23 +136,23 @@
 			<tr>
 				<td style="height:0"><% 
   WebErrorList errorList = new com.thera.thermfw.web.WebErrorList(); 
-  errorList.setParent(YProdottiSFForm); 
+  errorList.setParent(YEsportatoreClientiForm); 
   errorList.write(out); 
 %>
 <!--<span class="errorlist"></span>--></td>
 			</tr>
 		</table>
 	<%
-  YProdottiSFForm.writeFormEndElements(out); 
+  YEsportatoreClientiForm.writeFormEndElements(out); 
 %>
 </form></td>
 </tr>
 
 <tr>
 <td style="height:0">
-<% String ftr = YProdottiSFForm.getCompleteFooter();
+<% String ftr = YEsportatoreClientiForm.getCompleteFooter();
  if (ftr != null) { 
-   request.setAttribute("dataCollector", YProdottiSFBODC); 
+   request.setAttribute("dataCollector", YEsportatoreClientiBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= ftr %>" flush="true"/> 
 <% } %> 
@@ -164,14 +164,14 @@
 <%
            // blocco YYY  
            // a completamento blocco di codice XXX in head 
-              YProdottiSFForm.writeBodyEndElements(out); 
+              YEsportatoreClientiForm.writeBodyEndElements(out); 
            } 
            else 
-              errors.addAll(0, YProdottiSFBODC.getErrorList().getErrors()); 
+              errors.addAll(0, YEsportatoreClientiBODC.getErrorList().getErrors()); 
         } 
         else 
-           errors.addAll(0, YProdottiSFBODC.getErrorList().getErrors()); 
-           if(YProdottiSFBODC.getConflict() != null) 
+           errors.addAll(0, YEsportatoreClientiBODC.getErrorList().getErrors()); 
+           if(YEsportatoreClientiBODC.getConflict() != null) 
                 conflitPresent = true; 
      } 
      else 
@@ -188,8 +188,8 @@
   }
   finally 
   {
-     if(YProdottiSFBODC != null && !YProdottiSFBODC.close(false)) 
-        errors.addAll(0, YProdottiSFBODC.getErrorList().getErrors()); 
+     if(YEsportatoreClientiBODC != null && !YEsportatoreClientiBODC.close(false)) 
+        errors.addAll(0, YEsportatoreClientiBODC.getErrorList().getErrors()); 
      try 
      { 
         se.end(); 
@@ -206,16 +206,16 @@
       if(!conflitPresent)
   { 
      request.setAttribute("ErrorMessages", errors); 
-     String errorPage = YProdottiSFForm.getErrorPage(); 
+     String errorPage = YEsportatoreClientiForm.getErrorPage(); 
 %> 
      <jsp:include page="<%=errorPage%>" flush="true"/> 
 <% 
   } 
   else 
   { 
-     request.setAttribute("ConflictMessages", YProdottiSFBODC.getConflict()); 
+     request.setAttribute("ConflictMessages", YEsportatoreClientiBODC.getConflict()); 
      request.setAttribute("ErrorMessages", errors); 
-     String conflictPage = YProdottiSFForm.getConflictPage(); 
+     String conflictPage = YEsportatoreClientiForm.getConflictPage(); 
 %> 
      <jsp:include page="<%=conflictPage%>" flush="true"/> 
 <% 
