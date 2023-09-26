@@ -1,17 +1,17 @@
 /*
- * @(#)YProdottiInseritiTM.java
+ * @(#)YReferentiInseritiTM.java
  */
 
 /**
- * YProdottiInseritiTM
+ * YReferentiInseritiTM
  *
  * <br></br><b>Copyright (C) : Thera SpA</b>
- * @author Wizard 25/09/2023 at 16:43:51
+ * @author Wizard 26/09/2023 at 12:33:35
  */
 /*
  * Revisions:
  * Date          Owner      Description
- * 25/09/2023    Wizard     Codice generato da Wizard
+ * 26/09/2023    Wizard     Codice generato da Wizard
  *
  */
 package it.softre.thip.base.connettori.salesforce.tabelle;
@@ -21,13 +21,23 @@ import java.sql.*;
 import com.thera.thermfw.base.*;
 import it.thera.thip.cs.*;
 
-public class YProdottiInseritiTM extends TableManager {
+public class YReferentiInseritiTM extends TableManager {
 
   
   /**
-   * Attributo ID_AZIENDA
+   * Attributo R_ANAGRAFICO
    */
-  public static final String ID_AZIENDA = "ID_AZIENDA";
+  public static final String R_ANAGRAFICO = "R_ANAGRAFICO";
+
+  /**
+   * Attributo R_SEQUENZA_RUB
+   */
+  public static final String R_SEQUENZA_RUB = "R_SEQUENZA_RUB";
+
+  /**
+   * Attributo ID_SALES_FORCE
+   */
+  public static final String ID_SALES_FORCE = "ID_SALES_FORCE";
 
   /**
    * Attributo STATO
@@ -55,15 +65,10 @@ public class YProdottiInseritiTM extends TableManager {
   public static final String TIMESTAMP_AGG = "TIMESTAMP_AGG";
 
   /**
-   * Attributo R_ARTICOLO
-   */
-  public static final String R_ARTICOLO = "R_ARTICOLO";
-
-  /**
    * Attributo TABLE_NAME
    */
-  public static final String TABLE_NAME = SystemParam.getSchema("SOFTRE") + "YPRODOTTI_INSERITI";
-  public static final String ID_SALES_FORCE = "ID_SALES_FORCE";
+  public static final String TABLE_NAME = SystemParam.getSchema("SOFTRE") + "YREFERENTI_INSERITI";
+
   /**
    *
    */
@@ -72,7 +77,7 @@ public class YProdottiInseritiTM extends TableManager {
   /**
    * Attributo CLASS_NAME
    */
-  private static final String CLASS_NAME = it.softre.thip.base.connettori.salesforce.tabelle.YProdottiInseriti.class.getName();
+  private static final String CLASS_NAME = it.softre.thip.base.connettori.salesforce.tabelle.YReferentiInseriti.class.getName();
 
   
   /**
@@ -83,27 +88,27 @@ public class YProdottiInseritiTM extends TableManager {
   /*
    * Revisions:
    * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
+   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
    *
    */
   public synchronized static TableManager getInstance() throws SQLException {
     if (cInstance == null) {
-      cInstance = (TableManager)Factory.createObject(YProdottiInseritiTM.class);
+      cInstance = (TableManager)Factory.createObject(YReferentiInseritiTM.class);
     }
     return cInstance;
   }
 
   /**
-   * YProdottiInseritiTM
+   * YReferentiInseritiTM
    * @throws SQLException
    */
   /*
    * Revisions:
    * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
+   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
    *
    */
-  public YProdottiInseritiTM() throws SQLException {
+  public YReferentiInseritiTM() throws SQLException {
     super();
   }
 
@@ -114,7 +119,7 @@ public class YProdottiInseritiTM extends TableManager {
   /*
    * Revisions:
    * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
+   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
    *
    */
   protected void initialize() throws SQLException {
@@ -130,16 +135,17 @@ public class YProdottiInseritiTM extends TableManager {
   /*
    * Revisions:
    * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
+   * 26/09/2023    Wizard     Codice generato da Wizard
    *
    */
   protected void initializeRelation() throws SQLException {
     super.initializeRelation();
-    addAttribute("IdAzienda", ID_AZIENDA);
-    addAttribute("RArticolo", R_ARTICOLO);
     addAttribute("IdSalesForce", ID_SALES_FORCE);
+    addAttribute("RAnagrafico", R_ANAGRAFICO);
+    addAttribute("RSequenzaRub", R_SEQUENZA_RUB);
+    
     addComponent("DatiComuniEstesi", DatiComuniEstesiTTM.class);
-    setKeys(ID_AZIENDA + "," + R_ARTICOLO);
+    setKeys(R_ANAGRAFICO + "," + R_SEQUENZA_RUB);
 
     setTimestampColumn("TIMESTAMP_AGG");
     ((it.thera.thip.cs.DatiComuniEstesiTTM)getTransientTableManager("DatiComuniEstesi")).setExcludedColums();
@@ -152,11 +158,13 @@ public class YProdottiInseritiTM extends TableManager {
   /*
    * Revisions:
    * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
+   * 26/09/2023    Wizard     Codice generato da Wizard
    *
    */
   private void init() throws SQLException {
-    configure();
+    configure(ID_SALES_FORCE + ", " + R_ANAGRAFICO + ", " + R_SEQUENZA_RUB + ", " + STATO
+         + ", " + R_UTENTE_CRZ + ", " + TIMESTAMP_CRZ + ", " + R_UTENTE_AGG + ", " + TIMESTAMP_AGG
+        );
   }
 
 }

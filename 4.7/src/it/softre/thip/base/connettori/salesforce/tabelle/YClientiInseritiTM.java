@@ -58,6 +58,8 @@ public class YClientiInseritiTM extends TableManager {
    * Attributo R_CLIENTE
    */
   public static final String R_CLIENTE = "R_CLIENTE";
+  
+  public static final String ID_SALES_FORCE = "ID_SALES_FORCE";
 
   /**
    * Attributo TABLE_NAME
@@ -137,6 +139,7 @@ public class YClientiInseritiTM extends TableManager {
     super.initializeRelation();
     addAttribute("IdAzienda", ID_AZIENDA);
     addAttribute("RCliente", R_CLIENTE);
+    addAttribute("IdSalesForce", ID_SALES_FORCE);
     
     addComponent("DatiComuniEstesi", DatiComuniEstesiTTM.class);
     setKeys(ID_AZIENDA + "," + R_CLIENTE);
@@ -156,8 +159,7 @@ public class YClientiInseritiTM extends TableManager {
    *
    */
   private void init() throws SQLException {
-    configure(ID_AZIENDA + ", " + R_CLIENTE + ", " + STATO + ", " + R_UTENTE_CRZ
-         + ", " + TIMESTAMP_CRZ + ", " + R_UTENTE_AGG + ", " + TIMESTAMP_AGG);
+    configure();
   }
 
 }

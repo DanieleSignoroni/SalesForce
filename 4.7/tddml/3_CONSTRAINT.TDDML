@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE TDDML SYSTEM "../../../TDDML.dtd">
+<TDDML>
+  <!-- YREFERENTI_INSERITI (YREFERE) -->
+  <AlterTable schema="THIPPERS" name="YREFERENTI_INSERITI">
+    <AddConstraint>
+      <Constraint name="Rubrica_233272408" refschema="FINANCE" reftable="BBANRPT" schema="THIPPERS" ondelete="Restrict">
+        <ColumnRef name="R_ANAGRAFICO"/>
+        <ColumnRef name="R_SEQUENZA_RUB"/>
+      </Constraint>
+    </AddConstraint>
+  </AlterTable>
+</TDDML>

@@ -1,0 +1,24 @@
+<tfml>
+  <generator type="form"/>
+  <form classHdr="YOfferteInserite"
+    name="YOfferteInseriteForm"
+    locktype="nolock"
+    errorList="yes" menubar="yes" toolbar="yes" submitReset="none"
+    jsLibraryName="it/softre/thip/base/connettori/salesforce/tabelle/YOfferteInserite.js"
+    onLoadPresent="yes"
+    header="com.thera.thermfw.common.Header.jsp"
+    footer="com.thera.thermfw.common.Footer.jsp">
+    <menubar  name="myMenuBar">
+      <import file="it/thera/thip/cs/defObjMenu.tfml"/>
+    </menubar>
+    <toolbar name="myToolBar" imgwidth="16" imgheight="16">
+      <import file="it/thera/thip/cs/defObjMenu.tfml"/>
+    </toolbar>
+    <textinput name="IdAzienda" classAD="IdAzienda"/>
+    <textinput name="RAnnoOff" classAD="RAnnoOff"/>
+    <textinput name="RNumeroOff" classAD="RNumeroOff"/>
+    <tabbed name="mytabbed" height="100%" width="100%">
+    </tabbed>
+  </form>
+</tfml>
+

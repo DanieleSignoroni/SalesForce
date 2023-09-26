@@ -27,326 +27,290 @@ import com.thera.thermfw.security.*;
 
 public abstract class YClientiInseritiPO extends EntitaAzienda implements BusinessObject, Authorizable, Deletable, Conflictable {
 
-  
-  /**
-   * Attributo cInstance
-   */
-  private static YClientiInseriti cInstance;
+	protected String iIdSalesForce;
+	
+	private static YClientiInseriti cInstance;
 
-  /**
-   * Attributo iCliente
-   */
-  protected Proxy iCliente = new Proxy(it.thera.thip.base.cliente.ClienteVendita.class);
+	protected Proxy iCliente = new Proxy(it.thera.thip.base.cliente.ClienteVendita.class);
 
-  
-  /**
-   * retrieveList
-   * @param where
-   * @param orderBy
-   * @param optimistic
-   * @return Vector
-   * @throws SQLException
-   * @throws ClassNotFoundException
-   * @throws InstantiationException
-   * @throws IllegalAccessException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public static Vector retrieveList(String where, String orderBy, boolean optimistic) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    if (cInstance == null)
-      cInstance = (YClientiInseriti)Factory.createObject(YClientiInseriti.class);
-    return PersistentObject.retrieveList(cInstance, where, orderBy, optimistic);
-  }
+	@SuppressWarnings("rawtypes")
+	public static Vector retrieveList(String where, String orderBy, boolean optimistic) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		if (cInstance == null)
+			cInstance = (YClientiInseriti)Factory.createObject(YClientiInseriti.class);
+		return PersistentObject.retrieveList(cInstance, where, orderBy, optimistic);
+	}
 
-  /**
-   * elementWithKey
-   * @param key
-   * @param lockType
-   * @return YClientiInseriti
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public static YClientiInseriti elementWithKey(String key, int lockType) throws SQLException {
-    return (YClientiInseriti)PersistentObject.elementWithKey(YClientiInseriti.class, key, lockType);
-  }
+	public static YClientiInseriti elementWithKey(String key, int lockType) throws SQLException {
+		return (YClientiInseriti)PersistentObject.elementWithKey(YClientiInseriti.class, key, lockType);
+	}
 
-  /**
-   * YClientiInseritiPO
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public YClientiInseritiPO() {
-    setIdAzienda(Azienda.getAziendaCorrente());
-  }
+	public YClientiInseritiPO() {
+		setIdAzienda(Azienda.getAziendaCorrente());
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param cliente
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setCliente(ClienteVendita cliente) {
-    String idAzienda = getIdAzienda();
-    if (cliente != null) {
-      idAzienda = KeyHelper.getTokenObjectKey(cliente.getKey(), 1);
-    }
-    setIdAziendaInternal(idAzienda);
-    this.iCliente.setObject(cliente);
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param cliente
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setCliente(ClienteVendita cliente) {
+		String idAzienda = getIdAzienda();
+		if (cliente != null) {
+			idAzienda = KeyHelper.getTokenObjectKey(cliente.getKey(), 1);
+		}
+		setIdAziendaInternal(idAzienda);
+		this.iCliente.setObject(cliente);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return ClienteVendita
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public ClienteVendita getCliente() {
-    return (ClienteVendita)iCliente.getObject();
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return ClienteVendita
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public ClienteVendita getCliente() {
+		return (ClienteVendita)iCliente.getObject();
+	}
 
-  /**
-   * setClienteKey
-   * @param key
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setClienteKey(String key) {
-    iCliente.setKey(key);
-    String idAzienda = KeyHelper.getTokenObjectKey(key, 1);
-    setIdAziendaInternal(idAzienda);
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * setClienteKey
+	 * @param key
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setClienteKey(String key) {
+		iCliente.setKey(key);
+		String idAzienda = KeyHelper.getTokenObjectKey(key, 1);
+		setIdAziendaInternal(idAzienda);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * getClienteKey
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getClienteKey() {
-    return iCliente.getKey();
-  }
+	/**
+	 * getClienteKey
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getClienteKey() {
+		return iCliente.getKey();
+	}
+	
+	public String getIdSalesForce() {
+		return iIdSalesForce;
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param idAzienda
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setIdAzienda(String idAzienda) {
-    setIdAziendaInternal(idAzienda);
-    setDirty();
-    setOnDB(false);
-  }
+	public void setIdSalesForce(String iIdSalesForce) {
+		this.iIdSalesForce = iIdSalesForce;
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getIdAzienda() {
-    String key = iAzienda.getKey();
-    return key;
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param idAzienda
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setIdAzienda(String idAzienda) {
+		setIdAziendaInternal(idAzienda);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param rCliente
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setRCliente(String rCliente) {
-    String key = iCliente.getKey();
-    iCliente.setKey(KeyHelper.replaceTokenObjectKey(key , 2, rCliente));
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getIdAzienda() {
+		String key = iAzienda.getKey();
+		return key;
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getRCliente() {
-    String key = iCliente.getKey();
-    String objRCliente = KeyHelper.getTokenObjectKey(key,2);
-    return objRCliente;
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param rCliente
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setRCliente(String rCliente) {
+		String key = iCliente.getKey();
+		iCliente.setKey(KeyHelper.replaceTokenObjectKey(key , 2, rCliente));
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * setEqual
-   * @param obj
-   * @throws CopyException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setEqual(Copyable obj) throws CopyException {
-    super.setEqual(obj);
-    YClientiInseritiPO yClientiInseritiPO = (YClientiInseritiPO)obj;
-    iCliente.setEqual(yClientiInseritiPO.iCliente);
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getRCliente() {
+		String key = iCliente.getKey();
+		String objRCliente = KeyHelper.getTokenObjectKey(key,2);
+		return objRCliente;
+	}
 
-  /**
-   * checkAll
-   * @param components
-   * @return Vector
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public Vector checkAll(BaseComponentsCollection components) {
-    Vector errors = new Vector();
-    components.runAllChecks(errors);
-    return errors;
-  }
+	/**
+	 * setEqual
+	 * @param obj
+	 * @throws CopyException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setEqual(Copyable obj) throws CopyException {
+		super.setEqual(obj);
+		YClientiInseritiPO yClientiInseritiPO = (YClientiInseritiPO)obj;
+		iCliente.setEqual(yClientiInseritiPO.iCliente);
+	}
 
-  /**
-   * setKey
-   * @param key
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setKey(String key) {
-    setIdAzienda(KeyHelper.getTokenObjectKey(key, 1));
-    setRCliente(KeyHelper.getTokenObjectKey(key, 2));
-  }
+	/**
+	 * checkAll
+	 * @param components
+	 * @return Vector
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public Vector checkAll(BaseComponentsCollection components) {
+		Vector errors = new Vector();
+		components.runAllChecks(errors);
+		return errors;
+	}
 
-  /**
-   * getKey
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getKey() {
-    String idAzienda = getIdAzienda();
-    String rCliente = getRCliente();
-    Object[] keyParts = {idAzienda, rCliente};
-    return KeyHelper.buildObjectKey(keyParts);
-  }
+	/**
+	 * setKey
+	 * @param key
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setKey(String key) {
+		setIdAzienda(KeyHelper.getTokenObjectKey(key, 1));
+		setRCliente(KeyHelper.getTokenObjectKey(key, 2));
+	}
 
-  /**
-   * isDeletable
-   * @return boolean
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public boolean isDeletable() {
-    return checkDelete() == null;
-  }
+	/**
+	 * getKey
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getKey() {
+		String idAzienda = getIdAzienda();
+		String rCliente = getRCliente();
+		Object[] keyParts = {idAzienda, rCliente};
+		return KeyHelper.buildObjectKey(keyParts);
+	}
 
-  /**
-   * toString
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String toString() {
-    return getClass().getName() + " [" + KeyHelper.formatKeyString(getKey()) + "]";
-  }
+	/**
+	 * isDeletable
+	 * @return boolean
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public boolean isDeletable() {
+		return checkDelete() == null;
+	}
 
-  /**
-   * getTableManager
-   * @return TableManager
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  protected TableManager getTableManager() throws SQLException {
-    return YClientiInseritiTM.getInstance();
-  }
+	/**
+	 * toString
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String toString() {
+		return getClass().getName() + " [" + KeyHelper.formatKeyString(getKey()) + "]";
+	}
 
-  /**
-   * setIdAziendaInternal
-   * @param idAzienda
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 25/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  protected void setIdAziendaInternal(String idAzienda) {
-    iAzienda.setKey(idAzienda);
-        String key2 = iCliente.getKey();
-    iCliente.setKey(KeyHelper.replaceTokenObjectKey(key2, 1, idAzienda));
-  }
+	/**
+	 * getTableManager
+	 * @return TableManager
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	protected TableManager getTableManager() throws SQLException {
+		return YClientiInseritiTM.getInstance();
+	}
+
+	/**
+	 * setIdAziendaInternal
+	 * @param idAzienda
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 25/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	protected void setIdAziendaInternal(String idAzienda) {
+		iAzienda.setKey(idAzienda);
+		String key2 = iCliente.getKey();
+		iCliente.setKey(KeyHelper.replaceTokenObjectKey(key2, 1, idAzienda));
+	}
 
 }
 

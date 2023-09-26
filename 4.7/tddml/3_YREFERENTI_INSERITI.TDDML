@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE TDDML SYSTEM "../../../TDDML.dtd">
+<TDDML>
+  <!-- YREFERENTI_INSERITI (YREFERE): Referenti inseriti - Sales Force; -->
+  <CreateTable schema="THIPPERS" name="YREFERENTI_INSERITI" shortname="YREFERE">
+    <Column name="R_ANAGRAFICO" shortname="R_ANAGRAFI" type="numeric" length="8" nullable="no"/>
+    <Column name="R_SEQUENZA_RUB" shortname="R_SEQUENZA" type="numeric" length="3" nullable="no"/>
+    <Column name="ID_SALES_FORCE" shortname="ID_SALES_F" type="varchar" length="200" nullable="no"/>
+    <Column name="STATO" shortname="STATO" type="char" length="1" nullable="no"/>
+    <Column name="R_UTENTE_CRZ" shortname="R_UTENTE_C" type="char" length="20" nullable="yes"/>
+    <Column name="TIMESTAMP_CRZ" shortname="TIMESTAMP_" type="timestamp" nullable="no" default="CURRENT TIMESTAMP"/>
+    <Column name="R_UTENTE_AGG" shortname="R_UTENTE_A" type="char" length="20" nullable="yes"/>
+    <Column name="TIMESTAMP_AGG" shortname="TIMESTAMP0" type="timestamp" nullable="no" default="CURRENT TIMESTAMP"/>
+  </CreateTable>
+  <CreateIndex schema="SOFTRE" name="YREFERENTI_INS_I01" tabschema="SOFTRE" tabname="YREFERENTI_INSERITI" shortname="YREFER_I01" unique="yes">
+    <IndexCol name="R_ANAGRAFICO" order="Asc"/>
+    <IndexCol name="R_SEQUENZA_RUB" order="Asc"/>
+  </CreateIndex>
+  <AlterTable schema="SOFTRE" name="YREFERENTI_INSERITI">
+    <AddPrimaryKey>
+      <PrimaryKey>
+        <ColumnRef name="R_ANAGRAFICO"/>
+        <ColumnRef name="R_SEQUENZA_RUB"/>
+      </PrimaryKey>
+    </AddPrimaryKey>
+  </AlterTable>
+  <Comment>
+    <CommentTable schema="SOFTRE" name="YREFERENTI_INSERITI" text="Referenti inseriti - Sales Force">
+      <CommentColumn name="R_ANAGRAFICO" text="Anagrafico"/>
+      <CommentColumn name="R_SEQUENZA_RUB" text="Nr. rubrica"/>
+      <CommentColumn name="ID_SALES_FORCE" text="Id Sales - Force"/>
+      <CommentColumn name="STATO" text="Stato"/>
+      <CommentColumn name="R_UTENTE_CRZ" text="Utente creazione"/>
+      <CommentColumn name="TIMESTAMP_CRZ" text="Timestamp creazione"/>
+      <CommentColumn name="R_UTENTE_AGG" text="Utente ultima modifica"/>
+      <CommentColumn name="TIMESTAMP_AGG" text="Timestamp ultima modifica"/>
+    </CommentTable>
+    <CommentIndex schema="SOFTRE" name="YREFERENTI_INS_I01" text="Primary Key"/>
+  </Comment>
+  <Grant schema="SOFTRE" name="YREFERENTI_INSERITI"/>
+</TDDML>

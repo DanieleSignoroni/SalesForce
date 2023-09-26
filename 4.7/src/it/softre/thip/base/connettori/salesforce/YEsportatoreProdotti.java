@@ -2,15 +2,12 @@ package it.softre.thip.base.connettori.salesforce;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.gson.JsonObject;
 import com.thera.thermfw.batch.BatchRunnable;
@@ -32,8 +29,8 @@ public class YEsportatoreProdotti extends BatchRunnable{
 	public String endpoint = "https://softresrl-dev-ed.develop.my.salesforce.com/services/data/v58.0/sobjects/";
 
 	public String id = "Product2";
-	
-	public String apiPath = "OAuth 00D7R000004wxNy!ASAAQLjJGfuv.54fL5BWOliBZNkrdzvqGf9qazWhlia5aSvVZfpCAEggrct_VSfMYQnbtV6sw2_GJwKcQOBBqNdZXBNpqKhz";
+
+	public String apiPath = "00D7R000004wxNy!ASAAQNiFGQuty4a.9KM6XuWg.96y23vqI9iD4kOd0Q41lMrLN4ShGeIlMQ1xyvM2dJ8GsUF88RIzNwWpHgdQxYgBhoXP87L0";
 
 	@Override
 	protected boolean run() {
@@ -41,21 +38,19 @@ public class YEsportatoreProdotti extends BatchRunnable{
 		for (Iterator<Articolo> iterator = prodotti.iterator(); iterator.hasNext();) {
 			try {
 				Articolo articolo = (Articolo) iterator.next();
+				String json = getJSONAdd(articolo);
 				YProdottiInseriti tab = getProdottoInseritoByKey(articolo.getKey());
 				if(tab == null) {
 					//insert
-					String json = getJSONAdd(articolo);
 					ApiResponse response = YApiManagement.callApi(endpoint+id, Method.POST, MediaType.APPLICATION_JSON, null, null, json,apiPath);
 					if(response.success()) {
-						JSONObject resp = response.getBodyAsJSONObject().getJSONObject("response");
-						String id = resp.getString("Id");
-						Map<String,String> parameters = new HashMap<String, String>();
-						parameters.put("Id", id);
-						ApiResponse read = YApiManagement.callApi(endpoint+id, Method.GET, MediaType.APPLICATION_JSON, null, parameters, null,apiPath);
+						String respKey = (String) response.getBodyAsJSONObject().get("id");
+						ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+respKey, Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
 						if(read.success()) {
 							//inserito correttamente
 							YProdottiInseriti ins = (YProdottiInseriti) Factory.createObject(YProdottiInseriti.class);
 							ins.setKey(articolo.getKey());
+							ins.setIdSalesForce(respKey);
 							if(ins.save() >= 0) {
 								ConnectionManager.commit();
 							}else {
@@ -65,6 +60,19 @@ public class YEsportatoreProdotti extends BatchRunnable{
 					}
 				}else {
 					//edit
+					ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
+					if(read.success()) {
+						//esiste davvero, vado in edit
+						//ApiResponse response = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.PATCH, MediaType.APPLICATION_JSON, null, null, json,apiPath);
+						// Get the response
+						//						if(response.success()) {
+						//							if(tab.save() >= 0) {
+						//								ConnectionManager.commit();
+						//							}else {
+						//								ConnectionManager.rollback();
+						//							}
+						//						}
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -96,7 +104,9 @@ public class YEsportatoreProdotti extends BatchRunnable{
 	public List<Articolo> getListaArticoliValidi(){
 		List<Articolo> lista = new ArrayList<Articolo>();
 		try {
-			lista = Articolo.retrieveList(Articolo.class," "+ArticoloTM.ID_AZIENDA+" = '"+Azienda.getAziendaCorrente()+"' AND "+ArticoloTM.STATO+" = '"+DatiComuniEstesi.VALIDO+"' ", "", false);
+			String where = " "+ArticoloTM.ID_AZIENDA+" = '"+Azienda.getAziendaCorrente()+"' AND "+ArticoloTM.STATO+" = '"+DatiComuniEstesi.VALIDO+"' ";
+			where += " AND ID_ARTICOLO = 'ZH9080285' ";
+			lista = Articolo.retrieveList(Articolo.class,where, "", false);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {

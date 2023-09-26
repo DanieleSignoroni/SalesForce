@@ -10,6 +10,7 @@
     <Column name="R_UTENTE_AGG" shortname="R_UTENTE_A" type="char" length="20" nullable="yes"/>
     <Column name="TIMESTAMP_AGG" shortname="TIMESTAMP0" type="timestamp" nullable="no" default="CURRENT TIMESTAMP"/>
     <Column name="R_CLIENTE" shortname="R_CLIENTE" type="char" length="8" nullable="no"/>
+	<Column name="ID_SALES_FORCE" shortname="ID" type="char" length="200" nullable="no"/>
   </CreateTable>
   <CreateIndex schema="SOFTRE" name="YCLIENTI_INSER_I01" tabschema="SOFTRE" tabname="YCLIENTI_INSERITI" shortname="YCLIEN_I01" unique="yes">
     <IndexCol name="ID_AZIENDA" order="Asc"/>
@@ -32,6 +33,7 @@
       <CommentColumn name="R_UTENTE_AGG" text="Utente ultima modifica"/>
       <CommentColumn name="TIMESTAMP_AGG" text="Timestamp ultima modifica"/>
       <CommentColumn name="R_CLIENTE" text="Id Cliente"/>
+	  <CommentColumn name="ID_SALES_FORCE" text="Id sales force"/>
     </CommentTable>
     <CommentIndex schema="SOFTRE" name="YCLIENTI_INSER_I01" text="Primary Key"/>
   </Comment>

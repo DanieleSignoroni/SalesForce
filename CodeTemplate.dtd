@@ -32,7 +32,7 @@
 <!ATTLIST UserCode
       TYPE (methods | attributes | classes) #IMPLIED>
 <!ENTITY templateVersion "1.0">
-<!ENTITY className "YClientiInseriti">
+<!ENTITY className "YOrdiniInseriti">
 <!ENTITY bracesPosition "Up">
 <!ENTITY blockIndent "2">
-<!ENTITY ref1 "YClientiInseritiPO">
+<!ENTITY ref1 "YOrdiniInseritiPO">

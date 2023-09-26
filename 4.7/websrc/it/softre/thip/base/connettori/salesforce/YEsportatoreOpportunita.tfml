@@ -1,9 +1,9 @@
 <tfml>
   <generator type="batchForm" />
-	<form name="YEsportatoreClienti" 
+	<form name="YEsportatoreReferenti" 
 				errorList="yes"
 				locktype="nolock"
-				classHdr="YClientiSF"
+				classHdr="YReferentiSF"
 				menubar="no"
 				inputFont="Arial,10"
 				toolbar="yes"

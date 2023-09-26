@@ -86,7 +86,7 @@ public class YApiManagement {
 		}
 		if(body != null)
 			apiRequest.setBody(body);
-		ApiClient apiClient = (ApiClient) new ApiClient(apiPath);
+		ApiClient apiClient = (ApiClient) new ApiClient("",apiPath);
 		try {
 			apiResponse = apiClient.send(apiRequest);
 		} catch (KeyManagementException e) {
@@ -154,7 +154,7 @@ public class YApiManagement {
 		}
 		if(body != null)
 			apiRequest.setBody(body);
-		ApiClient apiClient = (ApiClient) new ApiClient("");
+		ApiClient apiClient = (ApiClient) new ApiClient("","");
 		try {
 			apiResponse = apiClient.send(apiRequest);
 			if(bodyAsJson)

@@ -26,20 +26,20 @@
 "%> 
 <%
   ServletEnvironment se = (ServletEnvironment)Factory.createObject("com.thera.thermfw.web.ServletEnvironment"); 
-  BODataCollector YClientiSFBODC = null; 
+  BODataCollector YReferentiSFBODC = null; 
   List errors = new ArrayList(); 
   WebJSTypeList jsList = new WebJSTypeList(); 
-  WebForm YClientiSFForm =  
-     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YClientiSFForm", "YClientiSF", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
-  YClientiSFForm.setServletEnvironment(se); 
-  YClientiSFForm.setJSTypeList(jsList); 
-  YClientiSFForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
-  YClientiSFForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
-  ((WebFormForBatchForm)  YClientiSFForm).setGenerateThReportId(true); 
-  ((WebFormForBatchForm)  YClientiSFForm).setGenerateSSDEnabled(true); 
-  YClientiSFForm.setDeniedAttributeModeStr("hideNone"); 
-  int mode = YClientiSFForm.getMode(); 
-  String key = YClientiSFForm.getKey(); 
+  WebForm YReferentiSFForm =  
+     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YReferentiSFForm", "YReferentiSF", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
+  YReferentiSFForm.setServletEnvironment(se); 
+  YReferentiSFForm.setJSTypeList(jsList); 
+  YReferentiSFForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
+  YReferentiSFForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
+  ((WebFormForBatchForm)  YReferentiSFForm).setGenerateThReportId(true); 
+  ((WebFormForBatchForm)  YReferentiSFForm).setGenerateSSDEnabled(true); 
+  YReferentiSFForm.setDeniedAttributeModeStr("hideNone"); 
+  int mode = YReferentiSFForm.getMode(); 
+  String key = YReferentiSFForm.getKey(); 
   String errorMessage; 
   boolean requestIsValid = false; 
   boolean leftIsKey = false; 
@@ -50,35 +50,35 @@
      se.initialize(request, response); 
      if(se.begin()) 
      { 
-        YClientiSFForm.outTraceInfo(getClass().getName()); 
-        String collectorName = YClientiSFForm.findBODataCollectorName(); 
-				 YClientiSFBODC = (BODataCollector)Factory.createObject(collectorName); 
-        if (YClientiSFBODC instanceof WebDataCollector) 
-            ((WebDataCollector)YClientiSFBODC).setServletEnvironment(se); 
-        YClientiSFBODC.initialize("YClientiSF", true, 0); 
+        YReferentiSFForm.outTraceInfo(getClass().getName()); 
+        String collectorName = YReferentiSFForm.findBODataCollectorName(); 
+				 YReferentiSFBODC = (BODataCollector)Factory.createObject(collectorName); 
+        if (YReferentiSFBODC instanceof WebDataCollector) 
+            ((WebDataCollector)YReferentiSFBODC).setServletEnvironment(se); 
+        YReferentiSFBODC.initialize("YReferentiSF", true, 0); 
         int rcBODC; 
-        if (YClientiSFBODC.getBo() instanceof BatchRunnable) 
-          rcBODC = YClientiSFBODC.initSecurityServices("RUN", mode, true, false, true); 
+        if (YReferentiSFBODC.getBo() instanceof BatchRunnable) 
+          rcBODC = YReferentiSFBODC.initSecurityServices("RUN", mode, true, false, true); 
         else 
-          rcBODC = YClientiSFBODC.initSecurityServices(mode, true, true, true); 
+          rcBODC = YReferentiSFBODC.initSecurityServices(mode, true, true, true); 
         if (rcBODC == BODataCollector.OK) 
         { 
            requestIsValid = true; 
-           YClientiSFForm.write(out); 
+           YReferentiSFForm.write(out); 
            if(mode != WebForm.NEW) 
-              rcBODC = YClientiSFBODC.retrieve(key); 
+              rcBODC = YReferentiSFBODC.retrieve(key); 
            if(rcBODC == BODataCollector.OK) 
            { 
-              YClientiSFForm.setBODataCollector(YClientiSFBODC); 
-              YClientiSFForm.writeHeadElements(out); 
+              YReferentiSFForm.setBODataCollector(YReferentiSFBODC); 
+              YReferentiSFForm.writeHeadElements(out); 
            // fine blocco XXX  
            // a completamento blocco di codice YYY a fine body con catch e gestione errori 
 %> 
 
-	<title>Esportatore prodotti - Sales Force</title>
+	<title>Esportatore referenti - Sales Force</title>
 <% 
   WebToolBar myToolBarTB = new com.thera.thermfw.web.WebToolBar("myToolBar", "24", "24", "16", "16", "#f7fbfd","#C8D6E1"); 
-  myToolBarTB.setParent(YClientiSFForm); 
+  myToolBarTB.setParent(YReferentiSFForm); 
    request.setAttribute("toolBar", myToolBarTB); 
 %> 
 <jsp:include page="/com/thera/thermfw/batch/BatchRunnableMenu.jsp" flush="true"> 
@@ -98,16 +98,16 @@
   link_0.write(out); 
 %>
 <!--<link href="thermweb/css/thermGrid.css" rel="STYLESHEET" type="text/css">-->
-<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YClientiSFForm.getBodyOnBeforeUnload()%>" onload="<%=YClientiSFForm.getBodyOnLoad()%>" onunload="<%=YClientiSFForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
-   YClientiSFForm.writeBodyStartElements(out); 
+<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YReferentiSFForm.getBodyOnBeforeUnload()%>" onload="<%=YReferentiSFForm.getBodyOnLoad()%>" onunload="<%=YReferentiSFForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
+   YReferentiSFForm.writeBodyStartElements(out); 
 %> 
 
 	<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
 <td style="height:0" valign="top">
-<% String hdr = YClientiSFForm.getCompleteHeader();
+<% String hdr = YReferentiSFForm.getCompleteHeader();
  if (hdr != null) { 
-   request.setAttribute("dataCollector", YClientiSFBODC); 
+   request.setAttribute("dataCollector", YReferentiSFBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= hdr %>" flush="true"/> 
 <% } %> 
@@ -116,8 +116,8 @@
 
 <tr>
 <td valign="top" height="100%">
-<form action="<%=YClientiSFForm.getServlet()%>" method="post" name="YEsportatoreClienti" style="height:100%"><%
-  YClientiSFForm.writeFormStartElements(out); 
+<form action="<%=YReferentiSFForm.getServlet()%>" method="post" name="YEsportatoreReferenti" style="height:100%"><%
+  YReferentiSFForm.writeFormStartElements(out); 
 %>
 
 		<table cellpadding="2" cellspacing="2" height="100%" width="100%">
@@ -136,23 +136,23 @@
 			<tr>
 				<td style="height:0"><% 
   WebErrorList errorList = new com.thera.thermfw.web.WebErrorList(); 
-  errorList.setParent(YClientiSFForm); 
+  errorList.setParent(YReferentiSFForm); 
   errorList.write(out); 
 %>
 <!--<span class="errorlist"></span>--></td>
 			</tr>
 		</table>
 	<%
-  YClientiSFForm.writeFormEndElements(out); 
+  YReferentiSFForm.writeFormEndElements(out); 
 %>
 </form></td>
 </tr>
 
 <tr>
 <td style="height:0">
-<% String ftr = YClientiSFForm.getCompleteFooter();
+<% String ftr = YReferentiSFForm.getCompleteFooter();
  if (ftr != null) { 
-   request.setAttribute("dataCollector", YClientiSFBODC); 
+   request.setAttribute("dataCollector", YReferentiSFBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= ftr %>" flush="true"/> 
 <% } %> 
@@ -164,14 +164,14 @@
 <%
            // blocco YYY  
            // a completamento blocco di codice XXX in head 
-              YClientiSFForm.writeBodyEndElements(out); 
+              YReferentiSFForm.writeBodyEndElements(out); 
            } 
            else 
-              errors.addAll(0, YClientiSFBODC.getErrorList().getErrors()); 
+              errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
         } 
         else 
-           errors.addAll(0, YClientiSFBODC.getErrorList().getErrors()); 
-           if(YClientiSFBODC.getConflict() != null) 
+           errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
+           if(YReferentiSFBODC.getConflict() != null) 
                 conflitPresent = true; 
      } 
      else 
@@ -188,8 +188,8 @@
   }
   finally 
   {
-     if(YClientiSFBODC != null && !YClientiSFBODC.close(false)) 
-        errors.addAll(0, YClientiSFBODC.getErrorList().getErrors()); 
+     if(YReferentiSFBODC != null && !YReferentiSFBODC.close(false)) 
+        errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
      try 
      { 
         se.end(); 
@@ -206,16 +206,16 @@
       if(!conflitPresent)
   { 
      request.setAttribute("ErrorMessages", errors); 
-     String errorPage = YClientiSFForm.getErrorPage(); 
+     String errorPage = YReferentiSFForm.getErrorPage(); 
 %> 
      <jsp:include page="<%=errorPage%>" flush="true"/> 
 <% 
   } 
   else 
   { 
-     request.setAttribute("ConflictMessages", YClientiSFBODC.getConflict()); 
+     request.setAttribute("ConflictMessages", YReferentiSFBODC.getConflict()); 
      request.setAttribute("ErrorMessages", errors); 
-     String conflictPage = YClientiSFForm.getConflictPage(); 
+     String conflictPage = YReferentiSFForm.getConflictPage(); 
 %> 
      <jsp:include page="<%=conflictPage%>" flush="true"/> 
 <% 

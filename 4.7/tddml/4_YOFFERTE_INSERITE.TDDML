@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE TDDML SYSTEM "../../../TDDML.dtd">
 <TDDML>
-  <!-- YPRODOTTI_INSERITI (YPRODOT): Prodotti inseriti - Sales Force; -->
-  <CreateTable schema="SOFTRE" name="YPRODOTTI_INSERITI" shortname="YPRODOT">
+  <!-- YOFFERTE_INSERITE (YOFFERT): Offerte inserite; -->
+  <CreateTable schema="SOFTRE" name="YOFFERTE_INSERITE" shortname="YOFFERT">
     <Column name="ID_AZIENDA" shortname="ID_AZIENDA" type="char" length="3" nullable="no"/>
     <Column name="STATO" shortname="STATO" type="char" length="1" nullable="no"/>
     <Column name="R_UTENTE_CRZ" shortname="R_UTENTE_C" type="char" length="20" nullable="yes"/>
     <Column name="TIMESTAMP_CRZ" shortname="TIMESTAMP_" type="timestamp" nullable="no" default="CURRENT TIMESTAMP"/>
     <Column name="R_UTENTE_AGG" shortname="R_UTENTE_A" type="char" length="20" nullable="yes"/>
     <Column name="TIMESTAMP_AGG" shortname="TIMESTAMP0" type="timestamp" nullable="no" default="CURRENT TIMESTAMP"/>
-    <Column name="R_ARTICOLO" shortname="R_ARTICOLO" type="char" length="25" nullable="no"/>
-	<Column name="ID_SALES_FORCE" shortname="ID" type="char" length="200" nullable="no"/>
+    <Column name="R_ANNO_OFF" shortname="R_ANNO_OFF" type="char" length="6" nullable="no"/>
+    <Column name="R_NUMERO_OFF" shortname="R_NUMERO_O" type="char" length="10" nullable="no"/>
+    <Column name="ID_SALES_FORCE" shortname="ID_SALES_F" type="varchar" length="200" nullable="no"/>
   </CreateTable>
-  <CreateIndex schema="SOFTRE" name="YPRODOTTI_INSE_I01" tabschema="SOFTRE" tabname="YPRODOTTI_INSERITI" shortname="YPRODO_I01" unique="yes">
+  <CreateIndex schema="SOFTRE" name="YOFFERTE_INSER_I01" tabschema="SOFTRE" tabname="YOFFERTE_INSERITE" shortname="YOFFER_I01" unique="yes">
     <IndexCol name="ID_AZIENDA" order="Asc"/>
-    <IndexCol name="R_ARTICOLO" order="Asc"/>
+    <IndexCol name="R_ANNO_OFF" order="Asc"/>
+    <IndexCol name="R_NUMERO_OFF" order="Asc"/>
   </CreateIndex>
-  <AlterTable schema="SOFTRE" name="YPRODOTTI_INSERITI">
+  <AlterTable schema="SOFTRE" name="YOFFERTE_INSERITE">
     <AddPrimaryKey>
       <PrimaryKey>
         <ColumnRef name="ID_AZIENDA"/>
-        <ColumnRef name="R_ARTICOLO"/>
+        <ColumnRef name="R_ANNO_OFF"/>
+        <ColumnRef name="R_NUMERO_OFF"/>
       </PrimaryKey>
     </AddPrimaryKey>
   </AlterTable>
   <Comment>
-    <CommentTable schema="SOFTRE" name="YPRODOTTI_INSERITI" text="Prodotti inseriti - Sales Force">
+    <CommentTable schema="SOFTRE" name="YOFFERTE_INSERITE" text="Offerte inserite">
       <CommentColumn name="ID_AZIENDA" text="Azienda"/>
       <CommentColumn name="STATO" text="Stato"/>
       <CommentColumn name="R_UTENTE_CRZ" text="Utente creazione"/>
       <CommentColumn name="TIMESTAMP_CRZ" text="Timestamp creazione"/>
       <CommentColumn name="R_UTENTE_AGG" text="Utente ultima modifica"/>
       <CommentColumn name="TIMESTAMP_AGG" text="Timestamp ultima modifica"/>
-      <CommentColumn name="R_ARTICOLO" text="Id articolo"/>
-	  <CommentColumn name="ID_SALES_FORCE" text="Id sales force"/>
+      <CommentColumn name="R_ANNO_OFF" text="Anno offerta"/>
+      <CommentColumn name="R_NUMERO_OFF" text="Numero offerta"/>
+      <CommentColumn name="ID_SALES_FORCE" text="Id sales force"/>
     </CommentTable>
-    <CommentIndex schema="SOFTRE" name="YPRODOTTI_INSE_I01" text="Primary Key"/>
+    <CommentIndex schema="SOFTRE" name="YOFFERTE_INSER_I01" text="Primary Key"/>
   </Comment>
-  <Grant schema="SOFTRE" name="YPRODOTTI_INSERITI"/>
+  <Grant schema="SOFTRE" name="YOFFERTE_INSERITE"/>
 </TDDML>
