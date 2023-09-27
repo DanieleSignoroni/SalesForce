@@ -12,6 +12,7 @@
     <Column name="R_ANNO_ORD" shortname="R_ANNO_ORD" type="char" length="6" nullable="no"/>
     <Column name="R_NUMERO_ORD" shortname="R_NUMERO_O" type="char" length="10" nullable="no"/>
 	<Column name="ID_SALES_FORCE" shortname="ID_SALES_F" type="varchar" length="200" nullable="no"/>
+	<Column name="PROCESSATO" shortname="PROCES" type="char" length="1" nullable="no"/>
   </CreateTable>
   <CreateIndex schema="SOFTRE" name="YORDINI_INSERI_I01" tabschema="SOFTRE" tabname="YORDINI_INSERITI" shortname="YORDIN_I01" unique="yes">
     <IndexCol name="ID_AZIENDA" order="Asc"/>
@@ -38,6 +39,7 @@
       <CommentColumn name="R_ANNO_ORD" text="Anno ordine"/>
       <CommentColumn name="R_NUMERO_ORD" text="Numero ordine"/>
 	  <CommentColumn name="ID_SALES_FORCE" text="Id sales force"/>
+	  <CommentColumn name="PROCESSATO" text="Processato"/>
     </CommentTable>
     <CommentIndex schema="SOFTRE" name="YORDINI_INSERI_I01" text="Primary Key"/>
   </Comment>

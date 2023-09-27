@@ -27,381 +27,392 @@ import com.thera.thermfw.security.*;
 
 public abstract class YOrdiniInseritiPO extends EntitaAzienda implements BusinessObject, Authorizable, Deletable, Conflictable {
 
-  
-  /**
-   * Attributo cInstance
-   */
-  private static YOrdiniInseriti cInstance;
-  protected String iIdSalesForce;
-  /**
-   * Attributo iOrdinevendita
-   */
-  protected Proxy iOrdinevendita = new Proxy(it.thera.thip.vendite.ordineVE.OrdineVendita.class);
 
-  
-  /**
-   * retrieveList
-   * @param where
-   * @param orderBy
-   * @param optimistic
-   * @return Vector
-   * @throws SQLException
-   * @throws ClassNotFoundException
-   * @throws InstantiationException
-   * @throws IllegalAccessException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public static Vector retrieveList(String where, String orderBy, boolean optimistic) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    if (cInstance == null)
-      cInstance = (YOrdiniInseriti)Factory.createObject(YOrdiniInseriti.class);
-    return PersistentObject.retrieveList(cInstance, where, orderBy, optimistic);
-  }
+	/**
+	 * Attributo cInstance
+	 */
+	private static YOrdiniInseriti cInstance;
+	protected String iIdSalesForce;
+	protected boolean iProcessato;
 
-  public void setIdSalesForce(String idSalesForce) {
-	    this.iIdSalesForce = idSalesForce;
-	    setDirty();
-	  }
 
-	  /**
-	   * Restituisce l'attributo. 
-	   * @return String
-	   */
-	  /*
-	   * Revisions:
-	   * Date          Owner      Description
-	   * 26/09/2023    Wizard     Codice generato da Wizard
-	   *
-	   */
-	  public String getIdSalesForce() {
-	    return iIdSalesForce;
-	  }
+	public boolean isProcessato() {
+		return iProcessato;
+	}
 
-  /**
-   * elementWithKey
-   * @param key
-   * @param lockType
-   * @return YOrdiniInseriti
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public static YOrdiniInseriti elementWithKey(String key, int lockType) throws SQLException {
-    return (YOrdiniInseriti)PersistentObject.elementWithKey(YOrdiniInseriti.class, key, lockType);
-  }
+	public void setProcessato(boolean iProcessato) {
+		this.iProcessato = iProcessato;
+	}
 
-  /**
-   * YOrdiniInseritiPO
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public YOrdiniInseritiPO() {
-    setIdAzienda(Azienda.getAziendaCorrente());
-  }
+	/**
+	 * Attributo iOrdinevendita
+	 */
+	protected Proxy iOrdinevendita = new Proxy(it.thera.thip.vendite.ordineVE.OrdineVendita.class);
 
-  /**
-   * Valorizza l'attributo. 
-   * @param ordinevendita
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setOrdinevendita(OrdineVendita ordinevendita) {
-    String idAzienda = getIdAzienda();
-    if (ordinevendita != null) {
-      idAzienda = KeyHelper.getTokenObjectKey(ordinevendita.getKey(), 1);
-    }
-    setIdAziendaInternal(idAzienda);
-    this.iOrdinevendita.setObject(ordinevendita);
-    setDirty();
-    setOnDB(false);
-  }
 
-  /**
-   * Restituisce l'attributo. 
-   * @return OrdineVendita
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public OrdineVendita getOrdinevendita() {
-    return (OrdineVendita)iOrdinevendita.getObject();
-  }
+	/**
+	 * retrieveList
+	 * @param where
+	 * @param orderBy
+	 * @param optimistic
+	 * @return Vector
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	public static Vector retrieveList(String where, String orderBy, boolean optimistic) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		if (cInstance == null)
+			cInstance = (YOrdiniInseriti)Factory.createObject(YOrdiniInseriti.class);
+		return PersistentObject.retrieveList(cInstance, where, orderBy, optimistic);
+	}
 
-  /**
-   * setOrdinevenditaKey
-   * @param key
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setOrdinevenditaKey(String key) {
-    iOrdinevendita.setKey(key);
-    String idAzienda = KeyHelper.getTokenObjectKey(key, 1);
-    setIdAziendaInternal(idAzienda);
-    setDirty();
-    setOnDB(false);
-  }
+	public void setIdSalesForce(String idSalesForce) {
+		this.iIdSalesForce = idSalesForce;
+		setDirty();
+	}
 
-  /**
-   * getOrdinevenditaKey
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getOrdinevenditaKey() {
-    return iOrdinevendita.getKey();
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getIdSalesForce() {
+		return iIdSalesForce;
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param idAzienda
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setIdAzienda(String idAzienda) {
-    setIdAziendaInternal(idAzienda);
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * elementWithKey
+	 * @param key
+	 * @param lockType
+	 * @return YOrdiniInseriti
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	public static YOrdiniInseriti elementWithKey(String key, int lockType) throws SQLException {
+		return (YOrdiniInseriti)PersistentObject.elementWithKey(YOrdiniInseriti.class, key, lockType);
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getIdAzienda() {
-    String key = iAzienda.getKey();
-    return key;
-  }
+	/**
+	 * YOrdiniInseritiPO
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public YOrdiniInseritiPO() {
+		setIdAzienda(Azienda.getAziendaCorrente());
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param rAnnoOrd
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setRAnnoOrd(String rAnnoOrd) {
-    String key = iOrdinevendita.getKey();
-    iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key , 2, rAnnoOrd));
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param ordinevendita
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setOrdinevendita(OrdineVendita ordinevendita) {
+		String idAzienda = getIdAzienda();
+		if (ordinevendita != null) {
+			idAzienda = KeyHelper.getTokenObjectKey(ordinevendita.getKey(), 1);
+		}
+		setIdAziendaInternal(idAzienda);
+		this.iOrdinevendita.setObject(ordinevendita);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getRAnnoOrd() {
-    String key = iOrdinevendita.getKey();
-    String objRAnnoOrd = KeyHelper.getTokenObjectKey(key,2);
-    return objRAnnoOrd;
-    
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return OrdineVendita
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public OrdineVendita getOrdinevendita() {
+		return (OrdineVendita)iOrdinevendita.getObject();
+	}
 
-  /**
-   * Valorizza l'attributo. 
-   * @param rNumeroOrd
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setRNumeroOrd(String rNumeroOrd) {
-    String key = iOrdinevendita.getKey();
-    iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key , 3, rNumeroOrd));
-    setDirty();
-    setOnDB(false);
-  }
+	/**
+	 * setOrdinevenditaKey
+	 * @param key
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setOrdinevenditaKey(String key) {
+		iOrdinevendita.setKey(key);
+		String idAzienda = KeyHelper.getTokenObjectKey(key, 1);
+		setIdAziendaInternal(idAzienda);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * Restituisce l'attributo. 
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getRNumeroOrd() {
-    String key = iOrdinevendita.getKey();
-    String objRNumeroOrd = KeyHelper.getTokenObjectKey(key,3);
-    return objRNumeroOrd;
-  }
+	/**
+	 * getOrdinevenditaKey
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getOrdinevenditaKey() {
+		return iOrdinevendita.getKey();
+	}
 
-  /**
-   * setEqual
-   * @param obj
-   * @throws CopyException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setEqual(Copyable obj) throws CopyException {
-    super.setEqual(obj);
-    YOrdiniInseritiPO yOrdiniInseritiPO = (YOrdiniInseritiPO)obj;
-    iOrdinevendita.setEqual(yOrdiniInseritiPO.iOrdinevendita);
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param idAzienda
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setIdAzienda(String idAzienda) {
+		setIdAziendaInternal(idAzienda);
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * checkAll
-   * @param components
-   * @return Vector
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public Vector checkAll(BaseComponentsCollection components) {
-    Vector errors = new Vector();
-    components.runAllChecks(errors);
-    return errors;
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getIdAzienda() {
+		String key = iAzienda.getKey();
+		return key;
+	}
 
-  /**
-   * setKey
-   * @param key
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public void setKey(String key) {
-    setIdAzienda(KeyHelper.getTokenObjectKey(key, 1));
-    setRAnnoOrd(KeyHelper.getTokenObjectKey(key, 2));
-    setRNumeroOrd(KeyHelper.getTokenObjectKey(key, 3));
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param rAnnoOrd
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setRAnnoOrd(String rAnnoOrd) {
+		String key = iOrdinevendita.getKey();
+		iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key , 2, rAnnoOrd));
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * getKey
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String getKey() {
-    String idAzienda = getIdAzienda();
-    String rAnnoOrd = getRAnnoOrd();
-    String rNumeroOrd = getRNumeroOrd();
-    Object[] keyParts = {idAzienda, rAnnoOrd, rNumeroOrd};
-    return KeyHelper.buildObjectKey(keyParts);
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getRAnnoOrd() {
+		String key = iOrdinevendita.getKey();
+		String objRAnnoOrd = KeyHelper.getTokenObjectKey(key,2);
+		return objRAnnoOrd;
 
-  /**
-   * isDeletable
-   * @return boolean
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public boolean isDeletable() {
-    return checkDelete() == null;
-  }
+	}
 
-  /**
-   * toString
-   * @return String
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  public String toString() {
-    return getClass().getName() + " [" + KeyHelper.formatKeyString(getKey()) + "]";
-  }
+	/**
+	 * Valorizza l'attributo. 
+	 * @param rNumeroOrd
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setRNumeroOrd(String rNumeroOrd) {
+		String key = iOrdinevendita.getKey();
+		iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key , 3, rNumeroOrd));
+		setDirty();
+		setOnDB(false);
+	}
 
-  /**
-   * getTableManager
-   * @return TableManager
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  protected TableManager getTableManager() throws SQLException {
-    return YOrdiniInseritiTM.getInstance();
-  }
+	/**
+	 * Restituisce l'attributo. 
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getRNumeroOrd() {
+		String key = iOrdinevendita.getKey();
+		String objRNumeroOrd = KeyHelper.getTokenObjectKey(key,3);
+		return objRNumeroOrd;
+	}
 
-  /**
-   * setIdAziendaInternal
-   * @param idAzienda
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  protected void setIdAziendaInternal(String idAzienda) {
-    iAzienda.setKey(idAzienda);
-        String key2 = iOrdinevendita.getKey();
-    iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key2, 1, idAzienda));
-  }
+	/**
+	 * setEqual
+	 * @param obj
+	 * @throws CopyException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setEqual(Copyable obj) throws CopyException {
+		super.setEqual(obj);
+		YOrdiniInseritiPO yOrdiniInseritiPO = (YOrdiniInseritiPO)obj;
+		iOrdinevendita.setEqual(yOrdiniInseritiPO.iOrdinevendita);
+	}
+
+	/**
+	 * checkAll
+	 * @param components
+	 * @return Vector
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public Vector checkAll(BaseComponentsCollection components) {
+		Vector errors = new Vector();
+		components.runAllChecks(errors);
+		return errors;
+	}
+
+	/**
+	 * setKey
+	 * @param key
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public void setKey(String key) {
+		setIdAzienda(KeyHelper.getTokenObjectKey(key, 1));
+		setRAnnoOrd(KeyHelper.getTokenObjectKey(key, 2));
+		setRNumeroOrd(KeyHelper.getTokenObjectKey(key, 3));
+	}
+
+	/**
+	 * getKey
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String getKey() {
+		String idAzienda = getIdAzienda();
+		String rAnnoOrd = getRAnnoOrd();
+		String rNumeroOrd = getRNumeroOrd();
+		Object[] keyParts = {idAzienda, rAnnoOrd, rNumeroOrd};
+		return KeyHelper.buildObjectKey(keyParts);
+	}
+
+	/**
+	 * isDeletable
+	 * @return boolean
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public boolean isDeletable() {
+		return checkDelete() == null;
+	}
+
+	/**
+	 * toString
+	 * @return String
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	public String toString() {
+		return getClass().getName() + " [" + KeyHelper.formatKeyString(getKey()) + "]";
+	}
+
+	/**
+	 * getTableManager
+	 * @return TableManager
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	protected TableManager getTableManager() throws SQLException {
+		return YOrdiniInseritiTM.getInstance();
+	}
+
+	/**
+	 * setIdAziendaInternal
+	 * @param idAzienda
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	protected void setIdAziendaInternal(String idAzienda) {
+		iAzienda.setKey(idAzienda);
+		String key2 = iOrdinevendita.getKey();
+		iOrdinevendita.setKey(KeyHelper.replaceTokenObjectKey(key2, 1, idAzienda));
+	}
 
 }
 

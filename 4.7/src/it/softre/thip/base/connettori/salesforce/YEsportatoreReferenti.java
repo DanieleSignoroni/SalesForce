@@ -1,5 +1,8 @@
 package it.softre.thip.base.connettori.salesforce;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,72 +20,90 @@ import com.thera.thermfw.persist.Factory;
 import com.thera.thermfw.persist.KeyHelper;
 import com.thera.thermfw.persist.PersistentObject;
 
+import it.softre.thip.base.connettori.salesforce.generale.YPsnDatiSalesForce;
 import it.softre.thip.base.connettori.salesforce.tabelle.YClientiInseriti;
 import it.softre.thip.base.connettori.salesforce.tabelle.YReferentiInseriti;
 import it.softre.thip.base.connettori.utils.YApiManagement;
 import it.thera.thip.api.client.ApiResponse;
-import it.thera.thip.api.client.ApiRequest.Method;
+import it.softre.thip.base.connettori.api.YApiRequest.Method;
 import it.thera.thip.base.azienda.Azienda;
 import it.thera.thip.base.cliente.ClienteVendita;
 import it.thera.thip.base.cliente.ClienteVenditaTM;
 import it.thera.thip.base.partner.RubricaEstesa;
-import it.thera.thip.base.partner.RubricaEstesaTM;
-import it.thera.thip.cs.DatiComuniEstesi;
 
 public class YEsportatoreReferenti extends BatchRunnable{
 
-	public String endpoint = "https://softresrl-dev-ed.develop.my.salesforce.com/services/data/v58.0/sobjects/";
+	public String endpoint = null;
 
 	public String id = "Contact";
 
-	public String apiPath = "00D7R000004wxNy!ASAAQNiFGQuty4a.9KM6XuWg.96y23vqI9iD4kOd0Q41lMrLN4ShGeIlMQ1xyvM2dJ8GsUF88RIzNwWpHgdQxYgBhoXP87L0";
+	public String apiPath = null;
 
 	@Override
 	protected boolean run() {
-		List<RubricaEstesa> prodotti = getListaReferentiValidi();
-		for (Iterator<RubricaEstesa> iterator = prodotti.iterator(); iterator.hasNext();) {
-			try {
-				RubricaEstesa referente = (RubricaEstesa) iterator.next();
-				String json = getJSONAdd(referente);
-				YReferentiInseriti tab = getReferenteInseritoByKey(referente.getKey());
-				if(tab == null) {
-					//insert
-					ApiResponse response = YApiManagement.callApi(endpoint+id, Method.POST, MediaType.APPLICATION_JSON, null, null, json,apiPath);
-					if(response.success()) {
-						String respKey = (String) response.getBodyAsJSONObject().get("id");
-						ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+respKey, Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
-						if(read.success()) {
-							//inserito correttamente
-							YReferentiInseriti ins = (YReferentiInseriti) Factory.createObject(YReferentiInseriti.class);
-							ins.setKey(referente.getKey());
-							ins.setIdSalesForce(respKey);
-							if(ins.save() >= 0) {
-								ConnectionManager.commit();
-							}else {
-								ConnectionManager.rollback();
+		YPsnDatiSalesForce psnDati = YPsnDatiSalesForce.getCurrentPersDatiSalesForce(Azienda.getAziendaCorrente());
+		if(psnDati != null) {
+			endpoint = psnDati.getInstanceUrl() + "/sobjects/";
+			apiPath = psnDati.getToken();
+			List<RubricaEstesa> prodotti = getListaReferentiValidi();
+			for (Iterator<RubricaEstesa> iterator = prodotti.iterator(); iterator.hasNext();) {
+				try {
+					RubricaEstesa referente = (RubricaEstesa) iterator.next();
+					String json = getJSONAdd(referente);
+					YReferentiInseriti tab = getReferenteInseritoByKey(referente.getKey());
+					if(tab == null) {
+						//insert
+						ApiResponse response = YApiManagement.callApi(endpoint+id, Method.POST, MediaType.APPLICATION_JSON, null, null, json,apiPath);
+						if(response.success()) {
+							String respKey = (String) response.getBodyAsJSONObject().get("id");
+							ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+respKey, Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
+							if(read.success()) {
+								//inserito correttamente
+								YReferentiInseriti ins = (YReferentiInseriti) Factory.createObject(YReferentiInseriti.class);
+								ins.setKey(referente.getKey());
+								ins.setIdSalesForce(respKey);
+								if(ins.save() >= 0) {
+									ConnectionManager.commit();
+								}else {
+									ConnectionManager.rollback();
+								}
 							}
 						}
+					}else {
+						//edit
+						ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
+						if(read.success()) {
+							//esiste davvero, vado in edit
+							String command = "curl -X PATCH "+endpoint+id+"/"+tab.getIdSalesForce()+"  -H \"Content-Type: application/json\"     -H \"Authorization: Bearer "+this.apiPath+"\" ";
+					        String formattedJson = json.replace("\"", "\"\"\"");
+							command += " -d "+formattedJson+" ";
+							Process powerShellProcess = Runtime.getRuntime().exec(command);
+							powerShellProcess.getOutputStream().close();
+							String line;
+							System.out.println("Standard Output:");
+							BufferedReader stdout = new BufferedReader(new InputStreamReader(
+									powerShellProcess.getInputStream()));
+							while ((line = stdout.readLine()) != null) {
+								System.out.println(line);
+							}
+							stdout.close();
+							System.out.println("Standard Error:");
+							BufferedReader stderr = new BufferedReader(new InputStreamReader(
+									powerShellProcess.getErrorStream()));
+							while ((line = stderr.readLine()) != null) {
+								System.out.println(line);
+							}
+							stderr.close();
+							System.out.println("Done");
+						}
 					}
-				}else {
-					//edit
-					ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
-					if(read.success()) {
-						//esiste davvero, vado in edit
-						//ApiResponse response = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.PATCH, MediaType.APPLICATION_JSON, null, null, json,apiPath);
-						// Get the response
-						//						if(response.success()) {
-						//							if(tab.save() >= 0) {
-						//								ConnectionManager.commit();
-						//							}else {
-						//								ConnectionManager.rollback();
-						//							}
-						//						}
-					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		return false;
@@ -126,7 +147,6 @@ public class YEsportatoreReferenti extends BatchRunnable{
 	public List<RubricaEstesa> getListaReferentiValidi(){
 		List<RubricaEstesa> lista = new ArrayList<RubricaEstesa>();
 		try {
-			String where = " ";
 			lista = RubricaEstesa.retrieveList(RubricaEstesa.class,"", "", false);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -171,7 +191,6 @@ public class YEsportatoreReferenti extends BatchRunnable{
 
 	@Override
 	protected String getClassAdCollectionName() {
-		// TODO Auto-generated method stub
 		return "YReferentiSF";
 	}
 

@@ -12,10 +12,10 @@ import org.json.JSONObject;
 
 import com.thera.thermfw.persist.Factory;
 
-import it.thera.thip.api.client.ApiClient;
-import it.thera.thip.api.client.ApiRequest;
+import it.softre.thip.base.connettori.api.YApiClient;
+import it.softre.thip.base.connettori.api.YApiRequest;
+import it.softre.thip.base.connettori.api.YApiRequest.Method;
 import it.thera.thip.api.client.ApiResponse;
-import it.thera.thip.api.client.ApiRequest.Method;
 
 /**
  * <h1>Softre Solutions</h1>
@@ -66,7 +66,7 @@ public class YApiManagement {
 	 */
 	public static ApiResponse callApi(String url,Method method,String contentType,Map<String,String> headers,Map<String,String> parameters,Object body, String apiPath) {
 		ApiResponse apiResponse = null;
-		ApiRequest apiRequest = (ApiRequest) Factory.createObject(ApiRequest.class);
+		YApiRequest apiRequest = (YApiRequest) Factory.createObject(YApiRequest.class);
 		apiRequest.setMethod(method);
 		apiRequest.setURL(url);
 		apiRequest.setContentType(contentType);
@@ -86,7 +86,7 @@ public class YApiManagement {
 		}
 		if(body != null)
 			apiRequest.setBody(body);
-		ApiClient apiClient = (ApiClient) new ApiClient("",apiPath);
+		YApiClient apiClient = (YApiClient) new YApiClient("",apiPath);
 		try {
 			apiResponse = apiClient.send(apiRequest);
 		} catch (KeyManagementException e) {
@@ -134,7 +134,7 @@ public class YApiManagement {
 	public static Object callApi(String url,Method method,String contentType,Map<String,String> headers,Map<String,String> parameters,Object body,boolean bodyAsJson) {
 		ApiResponse apiResponse = null;
 		Object bodyResponse = null;
-		ApiRequest apiRequest = (ApiRequest) Factory.createObject(ApiRequest.class);
+		YApiRequest apiRequest = (YApiRequest) Factory.createObject(YApiRequest.class);
 		apiRequest.setMethod(method);
 		apiRequest.setURL(url);
 		apiRequest.setContentType(contentType);
@@ -154,7 +154,7 @@ public class YApiManagement {
 		}
 		if(body != null)
 			apiRequest.setBody(body);
-		ApiClient apiClient = (ApiClient) new ApiClient("","");
+		YApiClient apiClient = (YApiClient) new YApiClient("","");
 		try {
 			apiResponse = apiClient.send(apiRequest);
 			if(bodyAsJson)

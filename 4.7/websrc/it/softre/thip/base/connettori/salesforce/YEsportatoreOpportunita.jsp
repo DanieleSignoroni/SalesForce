@@ -26,20 +26,20 @@
 "%> 
 <%
   ServletEnvironment se = (ServletEnvironment)Factory.createObject("com.thera.thermfw.web.ServletEnvironment"); 
-  BODataCollector YReferentiSFBODC = null; 
+  BODataCollector YOpportunitaSFBODC = null; 
   List errors = new ArrayList(); 
   WebJSTypeList jsList = new WebJSTypeList(); 
-  WebForm YReferentiSFForm =  
-     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YReferentiSFForm", "YReferentiSF", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
-  YReferentiSFForm.setServletEnvironment(se); 
-  YReferentiSFForm.setJSTypeList(jsList); 
-  YReferentiSFForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
-  YReferentiSFForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
-  ((WebFormForBatchForm)  YReferentiSFForm).setGenerateThReportId(true); 
-  ((WebFormForBatchForm)  YReferentiSFForm).setGenerateSSDEnabled(true); 
-  YReferentiSFForm.setDeniedAttributeModeStr("hideNone"); 
-  int mode = YReferentiSFForm.getMode(); 
-  String key = YReferentiSFForm.getKey(); 
+  WebForm YOpportunitaSFForm =  
+     new com.thera.thermfw.web.WebFormForBatchForm(request, response, "YOpportunitaSFForm", "YOpportunitaSF", "Arial,10", "com.thera.thermfw.batch.web.BatchFormActionAdapter", false, false, false, true, true, true, null, 0, true, null); 
+  YOpportunitaSFForm.setServletEnvironment(se); 
+  YOpportunitaSFForm.setJSTypeList(jsList); 
+  YOpportunitaSFForm.setHeader("it.thera.thip.cs.PantheraHeader.jsp"); 
+  YOpportunitaSFForm.setFooter("com.thera.thermfw.common.Footer.jsp"); 
+  ((WebFormForBatchForm)  YOpportunitaSFForm).setGenerateThReportId(true); 
+  ((WebFormForBatchForm)  YOpportunitaSFForm).setGenerateSSDEnabled(true); 
+  YOpportunitaSFForm.setDeniedAttributeModeStr("hideNone"); 
+  int mode = YOpportunitaSFForm.getMode(); 
+  String key = YOpportunitaSFForm.getKey(); 
   String errorMessage; 
   boolean requestIsValid = false; 
   boolean leftIsKey = false; 
@@ -50,35 +50,35 @@
      se.initialize(request, response); 
      if(se.begin()) 
      { 
-        YReferentiSFForm.outTraceInfo(getClass().getName()); 
-        String collectorName = YReferentiSFForm.findBODataCollectorName(); 
-				 YReferentiSFBODC = (BODataCollector)Factory.createObject(collectorName); 
-        if (YReferentiSFBODC instanceof WebDataCollector) 
-            ((WebDataCollector)YReferentiSFBODC).setServletEnvironment(se); 
-        YReferentiSFBODC.initialize("YReferentiSF", true, 0); 
+        YOpportunitaSFForm.outTraceInfo(getClass().getName()); 
+        String collectorName = YOpportunitaSFForm.findBODataCollectorName(); 
+				 YOpportunitaSFBODC = (BODataCollector)Factory.createObject(collectorName); 
+        if (YOpportunitaSFBODC instanceof WebDataCollector) 
+            ((WebDataCollector)YOpportunitaSFBODC).setServletEnvironment(se); 
+        YOpportunitaSFBODC.initialize("YOpportunitaSF", true, 0); 
         int rcBODC; 
-        if (YReferentiSFBODC.getBo() instanceof BatchRunnable) 
-          rcBODC = YReferentiSFBODC.initSecurityServices("RUN", mode, true, false, true); 
+        if (YOpportunitaSFBODC.getBo() instanceof BatchRunnable) 
+          rcBODC = YOpportunitaSFBODC.initSecurityServices("RUN", mode, true, false, true); 
         else 
-          rcBODC = YReferentiSFBODC.initSecurityServices(mode, true, true, true); 
+          rcBODC = YOpportunitaSFBODC.initSecurityServices(mode, true, true, true); 
         if (rcBODC == BODataCollector.OK) 
         { 
            requestIsValid = true; 
-           YReferentiSFForm.write(out); 
+           YOpportunitaSFForm.write(out); 
            if(mode != WebForm.NEW) 
-              rcBODC = YReferentiSFBODC.retrieve(key); 
+              rcBODC = YOpportunitaSFBODC.retrieve(key); 
            if(rcBODC == BODataCollector.OK) 
            { 
-              YReferentiSFForm.setBODataCollector(YReferentiSFBODC); 
-              YReferentiSFForm.writeHeadElements(out); 
+              YOpportunitaSFForm.setBODataCollector(YOpportunitaSFBODC); 
+              YOpportunitaSFForm.writeHeadElements(out); 
            // fine blocco XXX  
            // a completamento blocco di codice YYY a fine body con catch e gestione errori 
 %> 
 
-	<title>Esportatore referenti - Sales Force</title>
+	<title>Esportatore opportunita - Sales Force</title>
 <% 
   WebToolBar myToolBarTB = new com.thera.thermfw.web.WebToolBar("myToolBar", "24", "24", "16", "16", "#f7fbfd","#C8D6E1"); 
-  myToolBarTB.setParent(YReferentiSFForm); 
+  myToolBarTB.setParent(YOpportunitaSFForm); 
    request.setAttribute("toolBar", myToolBarTB); 
 %> 
 <jsp:include page="/com/thera/thermfw/batch/BatchRunnableMenu.jsp" flush="true"> 
@@ -98,16 +98,16 @@
   link_0.write(out); 
 %>
 <!--<link href="thermweb/css/thermGrid.css" rel="STYLESHEET" type="text/css">-->
-<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YReferentiSFForm.getBodyOnBeforeUnload()%>" onload="<%=YReferentiSFForm.getBodyOnLoad()%>" onunload="<%=YReferentiSFForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
-   YReferentiSFForm.writeBodyStartElements(out); 
+<body bottommargin="0" leftmargin="0" onbeforeunload="<%=YOpportunitaSFForm.getBodyOnBeforeUnload()%>" onload="<%=YOpportunitaSFForm.getBodyOnLoad()%>" onunload="<%=YOpportunitaSFForm.getBodyOnUnload()%>" rightmargin="0" topmargin="0"><%
+   YOpportunitaSFForm.writeBodyStartElements(out); 
 %> 
 
 	<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
 <td style="height:0" valign="top">
-<% String hdr = YReferentiSFForm.getCompleteHeader();
+<% String hdr = YOpportunitaSFForm.getCompleteHeader();
  if (hdr != null) { 
-   request.setAttribute("dataCollector", YReferentiSFBODC); 
+   request.setAttribute("dataCollector", YOpportunitaSFBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= hdr %>" flush="true"/> 
 <% } %> 
@@ -116,8 +116,8 @@
 
 <tr>
 <td valign="top" height="100%">
-<form action="<%=YReferentiSFForm.getServlet()%>" method="post" name="YEsportatoreReferenti" style="height:100%"><%
-  YReferentiSFForm.writeFormStartElements(out); 
+<form action="<%=YOpportunitaSFForm.getServlet()%>" method="post" name="YEsportatoreOpportunita" style="height:100%"><%
+  YOpportunitaSFForm.writeFormStartElements(out); 
 %>
 
 		<table cellpadding="2" cellspacing="2" height="100%" width="100%">
@@ -136,23 +136,23 @@
 			<tr>
 				<td style="height:0"><% 
   WebErrorList errorList = new com.thera.thermfw.web.WebErrorList(); 
-  errorList.setParent(YReferentiSFForm); 
+  errorList.setParent(YOpportunitaSFForm); 
   errorList.write(out); 
 %>
 <!--<span class="errorlist"></span>--></td>
 			</tr>
 		</table>
 	<%
-  YReferentiSFForm.writeFormEndElements(out); 
+  YOpportunitaSFForm.writeFormEndElements(out); 
 %>
 </form></td>
 </tr>
 
 <tr>
 <td style="height:0">
-<% String ftr = YReferentiSFForm.getCompleteFooter();
+<% String ftr = YOpportunitaSFForm.getCompleteFooter();
  if (ftr != null) { 
-   request.setAttribute("dataCollector", YReferentiSFBODC); 
+   request.setAttribute("dataCollector", YOpportunitaSFBODC); 
    request.setAttribute("servletEnvironment", se); %>
   <jsp:include page="<%= ftr %>" flush="true"/> 
 <% } %> 
@@ -164,14 +164,14 @@
 <%
            // blocco YYY  
            // a completamento blocco di codice XXX in head 
-              YReferentiSFForm.writeBodyEndElements(out); 
+              YOpportunitaSFForm.writeBodyEndElements(out); 
            } 
            else 
-              errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
+              errors.addAll(0, YOpportunitaSFBODC.getErrorList().getErrors()); 
         } 
         else 
-           errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
-           if(YReferentiSFBODC.getConflict() != null) 
+           errors.addAll(0, YOpportunitaSFBODC.getErrorList().getErrors()); 
+           if(YOpportunitaSFBODC.getConflict() != null) 
                 conflitPresent = true; 
      } 
      else 
@@ -188,8 +188,8 @@
   }
   finally 
   {
-     if(YReferentiSFBODC != null && !YReferentiSFBODC.close(false)) 
-        errors.addAll(0, YReferentiSFBODC.getErrorList().getErrors()); 
+     if(YOpportunitaSFBODC != null && !YOpportunitaSFBODC.close(false)) 
+        errors.addAll(0, YOpportunitaSFBODC.getErrorList().getErrors()); 
      try 
      { 
         se.end(); 
@@ -206,16 +206,16 @@
       if(!conflitPresent)
   { 
      request.setAttribute("ErrorMessages", errors); 
-     String errorPage = YReferentiSFForm.getErrorPage(); 
+     String errorPage = YOpportunitaSFForm.getErrorPage(); 
 %> 
      <jsp:include page="<%=errorPage%>" flush="true"/> 
 <% 
   } 
   else 
   { 
-     request.setAttribute("ConflictMessages", YReferentiSFBODC.getConflict()); 
+     request.setAttribute("ConflictMessages", YOpportunitaSFBODC.getConflict()); 
      request.setAttribute("ErrorMessages", errors); 
-     String conflictPage = YReferentiSFForm.getConflictPage(); 
+     String conflictPage = YOpportunitaSFForm.getConflictPage(); 
 %> 
      <jsp:include page="<%=conflictPage%>" flush="true"/> 
 <% 

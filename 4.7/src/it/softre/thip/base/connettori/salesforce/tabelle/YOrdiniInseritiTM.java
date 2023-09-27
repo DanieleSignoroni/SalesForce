@@ -23,151 +23,142 @@ import it.thera.thip.cs.*;
 
 public class YOrdiniInseritiTM extends TableManager {
 
-  
-  /**
-   * Attributo ID_AZIENDA
-   */
-  public static final String ID_AZIENDA = "ID_AZIENDA";
 
-  /**
-   * Attributo STATO
-   */
-  public static final String STATO = "STATO";
+	/**
+	 * Attributo ID_AZIENDA
+	 */
+	public static final String ID_AZIENDA = "ID_AZIENDA";
 
-  /**
-   * Attributo R_UTENTE_CRZ
-   */
-  public static final String R_UTENTE_CRZ = "R_UTENTE_CRZ";
+	/**
+	 * Attributo STATO
+	 */
+	public static final String STATO = "STATO";
 
-  /**
-   * Attributo TIMESTAMP_CRZ
-   */
-  public static final String TIMESTAMP_CRZ = "TIMESTAMP_CRZ";
+	/**
+	 * Attributo R_UTENTE_CRZ
+	 */
+	public static final String R_UTENTE_CRZ = "R_UTENTE_CRZ";
 
-  /**
-   * Attributo R_UTENTE_AGG
-   */
-  public static final String R_UTENTE_AGG = "R_UTENTE_AGG";
+	/**
+	 * Attributo TIMESTAMP_CRZ
+	 */
+	public static final String TIMESTAMP_CRZ = "TIMESTAMP_CRZ";
 
-  /**
-   * Attributo TIMESTAMP_AGG
-   */
-  public static final String TIMESTAMP_AGG = "TIMESTAMP_AGG";
+	/**
+	 * Attributo R_UTENTE_AGG
+	 */
+	public static final String R_UTENTE_AGG = "R_UTENTE_AGG";
 
-  /**
-   * Attributo R_ANNO_ORD
-   */
-  public static final String R_ANNO_ORD = "R_ANNO_ORD";
+	/**
+	 * Attributo TIMESTAMP_AGG
+	 */
+	public static final String TIMESTAMP_AGG = "TIMESTAMP_AGG";
 
-  /**
-   * Attributo R_NUMERO_ORD
-   */
-  public static final String R_NUMERO_ORD = "R_NUMERO_ORD";
-  
-  public static final String ID_SALES_FORCE = "ID_SALES_FORCE";
+	/**
+	 * Attributo R_ANNO_ORD
+	 */
+	public static final String R_ANNO_ORD = "R_ANNO_ORD";
 
-  /**
-   * Attributo TABLE_NAME
-   */
-  public static final String TABLE_NAME = SystemParam.getSchema("SOFTRE") + "YORDINI_INSERITI";
+	/**
+	 * Attributo R_NUMERO_ORD
+	 */
+	public static final String R_NUMERO_ORD = "R_NUMERO_ORD";
 
-  /**
-   *
-   */
-  private static TableManager cInstance;
+	public static final String ID_SALES_FORCE = "ID_SALES_FORCE";
 
-  /**
-   * Attributo CLASS_NAME
-   */
-  private static final String CLASS_NAME = it.softre.thip.base.connettori.salesforce.tabelle.YOrdiniInseriti.class.getName();
+	/**
+	 * Attributo TABLE_NAME
+	 */
+	public static final String TABLE_NAME = SystemParam.getSchema("SOFTRE") + "YORDINI_INSERITI";
 
-  
-  /**
-   * getInstance
-   * @return TableManager
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public synchronized static TableManager getInstance() throws SQLException {
-    if (cInstance == null) {
-      cInstance = (TableManager)Factory.createObject(YOrdiniInseritiTM.class);
-    }
-    return cInstance;
-  }
+	/**
+	 *
+	 */
+	private static TableManager cInstance;
 
-  /**
-   * YOrdiniInseritiTM
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  public YOrdiniInseritiTM() throws SQLException {
-    super();
-  }
+	/**
+	 * Attributo CLASS_NAME
+	 */
+	private static final String CLASS_NAME = it.softre.thip.base.connettori.salesforce.tabelle.YOrdiniInseriti.class.getName();
 
-  /**
-   * initialize
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    CodeGen     Codice generato da CodeGenerator
-   *
-   */
-  protected void initialize() throws SQLException {
-    setTableName(TABLE_NAME);
-    setObjClassName(CLASS_NAME);
-    init();
-  }
+	public static final String PROCESSATO = "PROCESSATO";
 
-  /**
-   * initializeRelation
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  protected void initializeRelation() throws SQLException {
-    super.initializeRelation();
-    addAttribute("IdAzienda", ID_AZIENDA);
-    addAttribute("RAnnoOrd", R_ANNO_ORD);
-    addAttribute("RNumeroOrd", R_NUMERO_ORD);
-    addAttribute("IdSalesForce", ID_SALES_FORCE);
-    addComponent("DatiComuniEstesi", DatiComuniEstesiTTM.class);
-    setKeys(ID_AZIENDA + "," + R_ANNO_ORD + "," + R_NUMERO_ORD);
 
-    setTimestampColumn("TIMESTAMP_AGG");
-    ((it.thera.thip.cs.DatiComuniEstesiTTM)getTransientTableManager("DatiComuniEstesi")).setExcludedColums();
-  }
+	/**
+	 * getInstance
+	 * @return TableManager
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	public synchronized static TableManager getInstance() throws SQLException {
+		if (cInstance == null) {
+			cInstance = (TableManager)Factory.createObject(YOrdiniInseritiTM.class);
+		}
+		return cInstance;
+	}
 
-  /**
-   * init
-   * @throws SQLException
-   */
-  /*
-   * Revisions:
-   * Date          Owner      Description
-   * 26/09/2023    Wizard     Codice generato da Wizard
-   *
-   */
-  private void init() throws SQLException {
-    configure(ID_AZIENDA + ", " + R_ANNO_ORD + ", " + R_NUMERO_ORD + ", " + STATO
-         + ", " + R_UTENTE_CRZ + ", " + TIMESTAMP_CRZ + ", " + R_UTENTE_AGG + ", " + TIMESTAMP_AGG
-        );
-  }
+	/**
+	 * YOrdiniInseritiTM
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	public YOrdiniInseritiTM() throws SQLException {
+		super();
+	}
+
+	/**
+	 * initialize
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    CodeGen     Codice generato da CodeGenerator
+	 *
+	 */
+	protected void initialize() throws SQLException {
+		setTableName(TABLE_NAME);
+		setObjClassName(CLASS_NAME);
+		init();
+	}
+
+	/**
+	 * initializeRelation
+	 * @throws SQLException
+	 */
+	/*
+	 * Revisions:
+	 * Date          Owner      Description
+	 * 26/09/2023    Wizard     Codice generato da Wizard
+	 *
+	 */
+	protected void initializeRelation() throws SQLException {
+		super.initializeRelation();
+		addAttribute("IdAzienda", ID_AZIENDA);
+		addAttribute("RAnnoOrd", R_ANNO_ORD);
+		addAttribute("RNumeroOrd", R_NUMERO_ORD);
+		addAttribute("IdSalesForce", ID_SALES_FORCE);
+		addAttribute("Processato", PROCESSATO);
+		addComponent("DatiComuniEstesi", DatiComuniEstesiTTM.class);
+		setKeys(ID_AZIENDA + "," + R_ANNO_ORD + "," + R_NUMERO_ORD);
+
+		setTimestampColumn("TIMESTAMP_AGG");
+		((it.thera.thip.cs.DatiComuniEstesiTTM)getTransientTableManager("DatiComuniEstesi")).setExcludedColums();
+	}
+
+	private void init() throws SQLException {
+		configure();
+	}
 
 }
 

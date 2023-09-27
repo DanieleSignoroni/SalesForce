@@ -1,0 +1,27 @@
+<tfml>
+  <generator type="form"/>
+  <form classHdr="YPsnDatiSalesForce"
+    name="YPsnDatiSalesForceForm"
+    locktype="nolock"
+    errorList="yes" menubar="yes" toolbar="yes" submitReset="none"
+    jsLibraryName="it/softre/thip/base/connettori/salesforce/generale/YPsnDatiSalesForce.js"
+    webFormModifierClass="it.softre.thip.base.connettori.salesforce.generale.web.YPsnDatiSalesForceFormModifier"
+    onLoadPresent="yes"
+    header="com.thera.thermfw.common.Header.jsp"
+    footer="com.thera.thermfw.common.Footer.jsp">
+    <menubar  name="myMenuBar">
+      <import file="it/thera/thip/cs/defObjMenu.tfml"/>
+    </menubar>
+    <toolbar name="myToolBar" imgwidth="16" imgheight="16">
+      <import file="it/thera/thip/cs/defObjMenu.tfml"/>
+    </toolbar>
+    <textinput name="IdAzienda" classAD="IdAzienda"/>
+    <tabbed name="mytabbed" height="100%" width="100%">
+      <tab name="tab1" resourceFile="it.softre.thip.base.connettori.salesforce.generale.resources.YPsnDatiSalesForce" resourceID="tab1">
+        <textarea name="InstanceUrl" classAD="InstanceUrl"/>
+        <textarea name="Token" classAD="Token"/>
+      </tab>
+    </tabbed>
+  </form>
+</tfml>
+

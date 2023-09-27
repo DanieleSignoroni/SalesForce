@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE TDDML SYSTEM "../../../TDDML.dtd">
+<TDDML>
+  <!-- YPSN_DATI_SALES_FORCE (YPSN_DA) -->
+  <AlterTable schema="SOFTRE" name="YPSN_DATI_SALES_FORCE">
+    <AddConstraint>
+      <Constraint name="Azienda_1469066993" refschema="THIP" reftable="AZIENDE_ESTESE" schema="SOFTRE" ondelete="Restrict">
+        <ColumnRef name="ID_AZIENDA"/>
+      </Constraint>
+    </AddConstraint>
+  </AlterTable>
+</TDDML>
