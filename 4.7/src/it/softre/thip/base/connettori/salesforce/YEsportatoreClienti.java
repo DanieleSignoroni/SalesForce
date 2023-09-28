@@ -1,8 +1,6 @@
 package it.softre.thip.base.connettori.salesforce;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,72 +36,85 @@ public class YEsportatoreClienti extends BatchRunnable{
 
 	@Override
 	protected boolean run() {
+		boolean ret = true;
+		writeLog("*** ESPORT CLIENTI - ACCOUNT SALES FORCE ***");
 		YPsnDatiSalesForce psnDati = YPsnDatiSalesForce.getCurrentPersDatiSalesForce(Azienda.getAziendaCorrente());
 		if(psnDati != null) {
 			endpoint = psnDati.getInstanceUrl() + "/sobjects/";
 			apiPath = psnDati.getToken();
 			List<ClienteVendita> prodotti = getListaClientiValidi();
 			for (Iterator<ClienteVendita> iterator = prodotti.iterator(); iterator.hasNext();) {
+				writeLog("");
 				try {
 					ClienteVendita cliente = (ClienteVendita) iterator.next();
+					writeLog("--------- Processo l'cliente : "+cliente.getKey()+" -------------");
 					String json = getJSONAdd(cliente);
 					YClientiInseriti tab = getClienteInseritoByKey(cliente.getKey());
 					if(tab == null) {
-						//insert
+						writeLog("L'cliente non e' ancora stato esportato in Sales Force, procedo all'inserimento");
 						ApiResponse response = YApiManagement.callApi(endpoint+id, Method.POST, MediaType.APPLICATION_JSON, null, null, json,apiPath);
 						if(response.success()) {
 							String respKey = (String) response.getBodyAsJSONObject().get("id");
 							ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+respKey, Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
 							if(read.success()) {
-								//inserito correttamente
+								writeLog("cliente inserito in Sales Force correttamente");
 								YClientiInseriti ins = (YClientiInseriti) Factory.createObject(YClientiInseriti.class);
 								ins.setKey(cliente.getKey());
 								ins.setIdSalesForce(respKey);
 								if(ins.save() >= 0) {
+									writeLog("Popolata correttamente la tabella di appoggio : "+ins.getAbstractTableManager().getMainTableName());
 									ConnectionManager.commit();
 								}else {
+									writeLog("Vi sono stati errori nella popolazione della tabella di appoggio : "+ins.getAbstractTableManager().getMainTableName());
 									ConnectionManager.rollback();
 								}
 							}
+						}else {
+							writeLog("Impossibile inserire l'cliente, errori: \n"+response.getBodyAsString());
 						}
 					}else {
-						//edit
 						ApiResponse read = YApiManagement.callApi(endpoint+id+"/"+tab.getIdSalesForce(), Method.GET, MediaType.APPLICATION_JSON, null, null, null,apiPath);
 						if(read.success()) {
-							//esiste davvero, vado in edit
+							writeLog("L'cliente e' gia presente in Sales Force \n id = "+tab.getIdSalesForce()+", procedo con l'aggiornamento");
 							String command = "curl -X PATCH "+endpoint+id+"/"+tab.getIdSalesForce()+"  -H \"Content-Type: application/json\"     -H \"Authorization: Bearer "+this.apiPath+"\" ";
-					        String formattedJson = json.replace("\"", "\"\"\"");
+							String formattedJson = json.replace("\"", "\"\"\"");
 							command += " -d "+formattedJson+" ";
 							Process powerShellProcess = Runtime.getRuntime().exec(command);
 							powerShellProcess.getOutputStream().close();
-							String line;
-							System.out.println("Standard Output:");
-							BufferedReader stdout = new BufferedReader(new InputStreamReader(
-									powerShellProcess.getInputStream()));
-							while ((line = stdout.readLine()) != null) {
-								System.out.println(line);
+							int exitValue = -1;
+							try {
+								exitValue = powerShellProcess.waitFor();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
-							stdout.close();
-							System.out.println("Standard Error:");
-							BufferedReader stderr = new BufferedReader(new InputStreamReader(
-									powerShellProcess.getErrorStream()));
-							while ((line = stderr.readLine()) != null) {
-								System.out.println(line);
+							if(exitValue == 0) {
+								writeLog("Account aggiornato correttamente");
+								if(tab.save() >= 0) {
+									writeLog("Aggiornata correttamente la tabella di appoggio : "+tab.getAbstractTableManager().getMainTableName());
+									ConnectionManager.commit();
+								}else {
+									writeLog("Vi sono stati errori nell'aggiornamento della tabella di appoggio : "+tab.getAbstractTableManager().getMainTableName());
+									ConnectionManager.rollback();
+								}
+							}else {
+								writeLog("Account aggiornato con errori");
 							}
-							stderr.close();
-							System.out.println("Done");
 						}
 					}
+					writeLog("--------- Ho finito di processare l'cliente : "+cliente.getKey()+" -------------");
 				} catch (JSONException e) {
+					ret = false;
 					e.printStackTrace();
 				} catch (SQLException e) {
+					ret = false;
 					e.printStackTrace();
 				} catch (IOException e) {
+					ret = false;
 					e.printStackTrace();
 				}
 			}
 		}
-		return false;
+		return ret;
 	}
 
 	public static YClientiInseriti getClienteInseritoByKey(String key) {
@@ -150,6 +161,11 @@ public class YEsportatoreClienti extends BatchRunnable{
 			e.printStackTrace();
 		}
 		return lista;
+	}
+
+	protected void writeLog(String text) {
+		System.out.println(text);
+		getOutput().println(text);
 	}
 
 	@Override

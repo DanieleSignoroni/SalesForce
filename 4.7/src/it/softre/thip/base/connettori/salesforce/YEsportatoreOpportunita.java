@@ -1,8 +1,6 @@
 package it.softre.thip.base.connettori.salesforce;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,22 +70,24 @@ public class YEsportatoreOpportunita extends BatchRunnable{
 									command += " -d "+formattedJson+" ";
 									Process powerShellProcess = Runtime.getRuntime().exec(command);
 									powerShellProcess.getOutputStream().close();
-									String line;
-									System.out.println("Standard Output:");
-									BufferedReader stdout = new BufferedReader(new InputStreamReader(
-											powerShellProcess.getInputStream()));
-									while ((line = stdout.readLine()) != null) {
-										System.out.println(line);
+									int exitValue = -1;
+									try {
+										exitValue = powerShellProcess.waitFor();
+									} catch (InterruptedException e) {
+										e.printStackTrace();
 									}
-									stdout.close();
-									System.out.println("Standard Error:");
-									BufferedReader stderr = new BufferedReader(new InputStreamReader(
-											powerShellProcess.getErrorStream()));
-									while ((line = stderr.readLine()) != null) {
-										System.out.println(line);
+									if(exitValue == 0) {
+										writeLog("Opportunita aggiornata correttamente");
+										if(yOrdiniInseriti.save() >= 0) {
+											writeLog("Aggiornata correttamente la tabella di appoggio : "+yOrdiniInseriti.getAbstractTableManager().getMainTableName());
+											ConnectionManager.commit();
+										}else {
+											writeLog("Vi sono stati errori nell'aggiornamento della tabella di appoggio : "+yOrdiniInseriti.getAbstractTableManager().getMainTableName());
+											ConnectionManager.rollback();
+										}
+									}else {
+										writeLog("Opportunita aggiornata con errori");
 									}
-									stderr.close();
-									System.out.println("Done");
 								}
 							}else {
 								writeLog("Cerco di inserire l'ordine");
