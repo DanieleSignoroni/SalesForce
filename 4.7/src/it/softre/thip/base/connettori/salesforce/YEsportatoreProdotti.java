@@ -100,6 +100,8 @@ public class YEsportatoreProdotti extends BatchRunnable{
 							}else {
 								writeLog("Prodotto aggiornato con errori");
 							}
+						}else {
+							writeLog(read.getBodyAsString());
 						}
 					}
 					writeLog("--------- Ho finito di processare l'articolo : "+articolo.getKey()+" -------------");
@@ -130,7 +132,11 @@ public class YEsportatoreProdotti extends BatchRunnable{
 	public String getJSONAdd(Articolo obj) {
 		JsonObject json = new JsonObject();
 		json.addProperty("Name", obj.getIdArticolo());
-		json.addProperty("Description", obj.getDescrizioneArticoloNLS().getDescrizioneEstesa());
+		if(obj.getDescrizioneArticoloNLS().getDescrizioneEstesa() != null)
+			json.addProperty("Description", obj.getDescrizioneArticoloNLS().getDescrizioneEstesa());
+		else
+			json.addProperty("Description", obj.getDescrizioneArticoloNLS().getDescrizione());
+		json.addProperty("ProductCode", obj.getIdArticolo());
 		return json.toString();
 	}
 
@@ -141,7 +147,6 @@ public class YEsportatoreProdotti extends BatchRunnable{
 		List<Articolo> lista = new ArrayList<Articolo>();
 		try {
 			String where = " "+ArticoloTM.ID_AZIENDA+" = '"+Azienda.getAziendaCorrente()+"' AND "+ArticoloTM.STATO+" = '"+DatiComuniEstesi.VALIDO+"' ";
-			where += " AND ID_ARTICOLO = '0.FSH1670511245666CK' ";
 			writeLog("\\ WHERE STRING = "+where);
 			lista = Articolo.retrieveList(Articolo.class,where, "", false);
 		} catch (ClassNotFoundException e) {

@@ -153,6 +153,7 @@ public class YEsportatoreOpportunita extends BatchRunnable{
 	public String getJSONAdd(OrdineVendita ord,String idClienteSalesFroce) {
 		JsonObject json = new JsonObject();
 		json.addProperty("AccountId", idClienteSalesFroce);
+		json.addProperty("Name", ord.getCliente().getRagioneSociale());
 		json.addProperty("Description", ord.getNota() != null ? ord.getNota() : "");
 		json.addProperty("StageName","Negotiation/Review");
 		json.addProperty("Amount",ord.getTotaleDocumento().toString());
